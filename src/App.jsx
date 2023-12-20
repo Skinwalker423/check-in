@@ -15,10 +15,10 @@ function App() {
       <GlobalStyles />
       <StyledApp>
         <Row type='vertical'>
-          <Row type='horizontal'>
+          <Row>
             <Heading as='h1'>Hello World</Heading>
 
-            <div>
+            <Row type='vertical'>
               <Input
                 type='text'
                 placeholder='Enter username'
@@ -26,7 +26,10 @@ function App() {
                 name='name'
               />
               <Button>Submit</Button>
-            </div>
+              <Button size='large' variation='secondary'>
+                Submit
+              </Button>
+            </Row>
           </Row>
           <Row type='vertical'>
             <Heading as='h3'>Form</Heading>

@@ -1,12 +1,28 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import styled from "styled-components";
+import GlobalStyles from "./styles/GlobalStyles";
+import Button from "./ui/Button";
+import Input from "./ui/Input";
+
+const H1 = styled.h1`
+  font-size: 30px;
+  font-weight: 600;
+  color: blue;
+`;
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  return <div>Hello</div>;
+  return (
+    <>
+      <GlobalStyles />
+      <H1>Hello World</H1>
+      <Input
+        type='text'
+        placeholder='Enter username'
+        id='name'
+        name='name'
+      />
+      <Button>Submit</Button>
+    </>
+  );
 }
 
 export default App;

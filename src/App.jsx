@@ -1,48 +1,36 @@
-import GlobalStyles from "./styles/GlobalStyles";
-import Button from "./ui/Button";
-import Input from "./ui/Input";
-import Heading from "./ui/Heading";
-import styled from "styled-components";
-import Row from "./ui/Row";
-
-const StyledApp = styled.main`
-  padding: 20px;
-`;
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import Bookings from "./pages/Bookings";
+import Cabins from "./pages/Cabins";
+import Account from "./pages/Account";
+import Login from "./pages/Login";
+import PageNotFound from "./pages/PageNotFound";
+import Settings from "./pages/Settings";
+import NewUsers from "./pages/Users";
 
 function App() {
   return (
-    <>
-      <GlobalStyles />
-      <StyledApp>
-        <Row type='vertical'>
-          <Row>
-            <Heading as='h1'>Hello World</Heading>
-
-            <Row type='vertical'>
-              <Input
-                type='text'
-                placeholder='Enter username'
-                id='name'
-                name='name'
-              />
-              <Button>Submit</Button>
-              <Button size='large' variation='secondary'>
-                Submit
-              </Button>
-            </Row>
-          </Row>
-          <Row type='vertical'>
-            <Heading as='h3'>Form</Heading>
-            <form action=''>
-              <Input
-                placeholder='Number of guests'
-                type='number'
-              />
-            </form>
-          </Row>
-        </Row>
-      </StyledApp>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          element={<Navigate replace to={"dashboard"} />}
+          index
+        />
+        <Route path='dashboard' element={<Dashboard />} />
+        <Route path='cabins' element={<Cabins />} />
+        <Route path='bookings' element={<Bookings />} />
+        <Route path='account' element={<Account />} />
+        <Route path='login' element={<Login />} />
+        <Route path='settings' element={<Settings />} />
+        <Route path='users' element={<NewUsers />} />
+        <Route path='*' element={<PageNotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

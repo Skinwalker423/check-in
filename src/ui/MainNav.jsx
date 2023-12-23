@@ -1,30 +1,42 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
+import { HiMiniHome } from "react-icons/hi2";
+import { HiCalendarDays } from "react-icons/hi2";
+import { HiMiniUsers } from "react-icons/hi2";
+import { HiMiniUserCircle } from "react-icons/hi2";
+import { HiCog8Tooth } from "react-icons/hi2";
+import { HiHomeModern } from "react-icons/hi2";
 
 const navConfig = [
   {
     path: "/dashboard",
     label: "Home",
+    icon: <HiMiniHome />,
   },
   {
     path: "/bookings",
     label: "Bookings",
+    icon: <HiCalendarDays />,
   },
   {
     path: "/account",
     label: "Account",
+    icon: <HiMiniUserCircle />,
   },
   {
     path: "/settings",
     label: "Settings",
+    icon: <HiCog8Tooth />,
   },
   {
     path: "/cabins",
     label: "Cabins",
+    icon: <HiHomeModern />,
   },
   {
     path: "/users",
     label: "Users",
+    icon: <HiMiniUsers />,
   },
 ];
 
@@ -78,12 +90,12 @@ export default function MainNav() {
     <nav>
       <NavList>
         <li>
-          <StyledNavLink to='/dashboard'>
-            Home
-          </StyledNavLink>
-          <StyledNavLink to='/bookings'>
-            Bookings
-          </StyledNavLink>
+          {navConfig.map(({ path, label, icon }) => (
+            <StyledNavLink key={label} to={path}>
+              {icon}
+              {label}
+            </StyledNavLink>
+          ))}
         </li>
       </NavList>
     </nav>

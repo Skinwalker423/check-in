@@ -1,6 +1,33 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
+const navConfig = [
+  {
+    path: "/dashboard",
+    label: "Home",
+  },
+  {
+    path: "/bookings",
+    label: "Bookings",
+  },
+  {
+    path: "/account",
+    label: "Account",
+  },
+  {
+    path: "/settings",
+    label: "Settings",
+  },
+  {
+    path: "/cabins",
+    label: "Cabins",
+  },
+  {
+    path: "/users",
+    label: "Users",
+  },
+];
+
 const NavList = styled.ul`
   display: flex;
   flex-direction: column;

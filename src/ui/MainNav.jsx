@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import { HiMiniHome } from "react-icons/hi2";
 import { HiCalendarDays } from "react-icons/hi2";
 import { HiMiniUsers } from "react-icons/hi2";
-import { HiMiniUserCircle } from "react-icons/hi2";
 import { HiCog8Tooth } from "react-icons/hi2";
 import { HiHomeModern } from "react-icons/hi2";
 
@@ -18,11 +17,7 @@ const navConfig = [
     label: "Bookings",
     icon: <HiCalendarDays />,
   },
-  {
-    path: "/account",
-    label: "Account",
-    icon: <HiMiniUserCircle />,
-  },
+
   {
     path: "/settings",
     label: "Settings",
@@ -89,14 +84,14 @@ export default function MainNav() {
   return (
     <nav>
       <NavList>
-        <li>
-          {navConfig.map(({ path, label, icon }) => (
-            <StyledNavLink key={label} to={path}>
+        {navConfig.map(({ path, label, icon }) => (
+          <li key={label}>
+            <StyledNavLink to={path}>
               {icon}
-              {label}
+              <span>{label}</span>
             </StyledNavLink>
-          ))}
-        </li>
+          </li>
+        ))}
       </NavList>
     </nav>
   );

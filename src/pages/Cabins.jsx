@@ -15,7 +15,9 @@ function Cabins() {
     });
   }, []);
 
-  console.log("cabins", cabins);
+  if (!cabins) return null;
+
+  console.log(cabins);
 
   return (
     <Row type='vertical'>
@@ -27,6 +29,7 @@ function Cabins() {
               <li key={cabin.id}>
                 <p>Room Number: {cabin.name}</p>
                 <p>{cabin.description}</p>
+                <img src={cabin.image} alt={cabin.name} />
               </li>
             );
           })}

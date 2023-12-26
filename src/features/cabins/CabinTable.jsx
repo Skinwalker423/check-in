@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { getCabins } from "../../services/apiCabins";
 
 import Spinner from "../../ui/Spinner";
+import CabinRow from "./CabinRow";
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -30,23 +31,28 @@ const TableHeader = styled.header`
 `;
 
 export default function CabinTable() {
-  const {
-    data: cabins,
-    isLoading,
-    error,
-  } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["cabin"],
     queryFn: getCabins,
   });
 
-  console.log("data", cabins, isLoading, error);
+  console.log("data", data, isLoading, error);
 
   if (isLoading) return <Spinner />;
 
   return (
-    <div>
-      <TableHeader>Title</TableHeader>
-      <Table>Table</Table>
-    </div>
+    <Table role='table'>
+      <TableHeader role='row'>
+        <div></div>
+        <div>Cabin</div>
+        <div>Capacity</div>
+        <div>Price</div>
+        <div>Discount</div>
+        <div></div>
+      </TableHeader>
+      {data.map((cabin) => {
+        return <CabinRow key={cabin.id} cabin={cabin} />;
+      })}
+    </Table>
   );
 }

@@ -55,6 +55,7 @@ const CabinRow = ({ cabin }) => {
       <div>Fits up to {maxCapacity}</div>
       <Price>{regularPrice}</Price>
       <Discount>{formatCurrency(discount)}</Discount>
+      <button>Delete</button>
     </TableRow>
   );
 };

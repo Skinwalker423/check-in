@@ -5,6 +5,7 @@ import { getCabins } from "../../services/apiCabins";
 
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
+import ErrorFallback from "../../ui/ErrorFallback";
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -36,9 +37,8 @@ export default function CabinTable() {
     queryFn: getCabins,
   });
 
-  console.log("data", data, isLoading, error);
-
   if (isLoading) return <Spinner />;
+  if (error) return <ErrorFallback error={error} />;
 
   return (
     <Table role='table'>

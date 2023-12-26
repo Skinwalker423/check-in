@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { formatCurrency } from "../../utils/helpers";
 
 const TableRow = styled.div`
   display: grid;
@@ -12,14 +13,14 @@ const TableRow = styled.div`
   }
 `;
 
-// const Img = styled.img`
-//   display: block;
-//   width: 6.4rem;
-//   aspect-ratio: 3 / 2;
-//   object-fit: cover;
-//   object-position: center;
-//   transform: scale(1.5) translateX(-7px);
-// `;
+const Img = styled.img`
+  display: block;
+  width: 6.4rem;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.5) translateX(-7px);
+`;
 
 const Cabin = styled.div`
   font-size: 1.6rem;
@@ -28,22 +29,32 @@ const Cabin = styled.div`
   font-family: "Sono";
 `;
 
-// const Price = styled.div`
-//   font-family: "Sono";
-//   font-weight: 600;
-// `;
+const Price = styled.div`
+  font-family: "Sono";
+  font-weight: 600;
+`;
 
-// const Discount = styled.div`
-//   font-family: "Sono";
-//   font-weight: 500;
-//   color: var(--color-green-700);
-// `;
+const Discount = styled.div`
+  font-family: "Sono";
+  font-weight: 500;
+  color: var(--color-green-700);
+`;
 
 const CabinRow = ({ cabin }) => {
-  console.log("props", cabin);
+  const {
+    name,
+    image,
+    maxCapacity,
+    regularPrice,
+    discount,
+  } = cabin;
   return (
-    <TableRow>
-      <Cabin>{cabin.name}</Cabin>
+    <TableRow role='row'>
+      <Img src={image} alt={name} />
+      <Cabin>{name}</Cabin>
+      <div>Fits up to {maxCapacity}</div>
+      <Price>{regularPrice}</Price>
+      <Discount>{formatCurrency(discount)}</Discount>
     </TableRow>
   );
 };

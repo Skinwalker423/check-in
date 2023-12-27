@@ -2,10 +2,10 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
 import { deleteCabin } from "../../services/apiCabins";
-import ErrorFallback from "../../ui/ErrorFallback";
 import Spinner from "../../ui/Spinner";
 
 const TableRow = styled.div`
@@ -57,20 +57,25 @@ const CabinRow = ({ cabin }) => {
     id,
   } = cabin;
   const queryClient = useQueryClient();
-  const { error, mutate, isLoading } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (id) => deleteCabin(id),
     mutationKey: ["delete cabin"],
     onSuccess: () => {
+      toast.success("Successfully deleted cabin");
       queryClient.invalidateQueries({
         queryKey: ["cabins"],
       });
     },
-    onError: () => {
-      alert("Could not delete");
+    onError: (err) => {
+      toast.error(err.message, {
+        duration: 7000,
+        style: {
+          backgroundColor: "red",
+          color: "white",
+        },
+      });
     },
   });
-
-  if (error) return <ErrorFallback error={error.message} />;
 
   return (
     <TableRow role='row'>

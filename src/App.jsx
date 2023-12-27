@@ -20,6 +20,7 @@ import Settings from "./pages/Settings";
 import NewUsers from "./pages/Users";
 import GlobalStyles from "./styles/GlobalStyles";
 import AppLayout from "./ui/AppLayout";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -59,6 +60,43 @@ function App() {
           <Route path='*' element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
+      <Toaster
+        position='top-center'
+        reverseOrder={false}
+        gutter={12}
+        containerStyle={{
+          margin: "8px",
+        }}
+        toastOptions={{
+          // Define default options
+          className: "",
+          duration: 5000,
+          style: {
+            background: "var(--color-grey-0)",
+            color: "var(--color-grey-700)",
+            fontSize: "16px",
+            maxWidth: "500px",
+            padding: "16px 24px",
+          },
+
+          // Default options for specific types
+          success: {
+            duration: 3000,
+            theme: {
+              primary: "green",
+              secondary: "black",
+            },
+          },
+          error: {
+            duration: 7000,
+            position: "top-right",
+            theme: {
+              primary: "red",
+              secondary: "black",
+            },
+          },
+        }}
+      />
     </QueryClientProvider>
   );
 }

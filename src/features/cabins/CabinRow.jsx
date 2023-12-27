@@ -5,6 +5,8 @@ import {
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
 import { deleteCabin } from "../../services/apiCabins";
+import ErrorFallback from "../../ui/ErrorFallback";
+import Spinner from "../../ui/Spinner";
 
 const TableRow = styled.div`
   display: grid;
@@ -55,21 +57,27 @@ const CabinRow = ({ cabin }) => {
     id,
   } = cabin;
   const queryClient = useQueryClient();
-  const { data, error, mutate, isLoading } = useMutation({
+  const { error, mutate, isLoading } = useMutation({
     mutationFn: (id) => deleteCabin(id),
     mutationKey: ["delete cabin"],
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["cabin"],
+        queryKey: ["cabins"],
       });
+    },
+    onError: () => {
+      alert("Could not delete");
     },
   });
 
-  console.log("test", error, data, isLoading);
+  if (error) return <ErrorFallback error={error.message} />;
 
   return (
     <TableRow role='row'>
-      <Img src={image} alt={name} />
+      <Img
+        src={image || "/cabins/cabin-008.jpg"}
+        alt={name}
+      />
       <Cabin>{name}</Cabin>
       <div>Fits up to {maxCapacity}</div>
       <Price>{regularPrice}</Price>
@@ -78,7 +86,7 @@ const CabinRow = ({ cabin }) => {
         disabled={isLoading}
         onClick={() => mutate(id)}
       >
-        Delete
+        {isLoading ? <Spinner /> : "Delete"}
       </button>
     </TableRow>
   );

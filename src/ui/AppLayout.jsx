@@ -8,6 +8,14 @@ const Main = styled.main`
   padding: 4rem 4.8rem 6.4rem;
 `;
 
+const Container = styled.div`
+  max-width: 120rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+`;
+
 const StyledAppLayout = styled.div`
   display: grid;
   height: 100vh;
@@ -21,7 +29,9 @@ const AppLayout = () => {
       <Header />
       <SideBar />
       <Main>
-        <Outlet />
+        <Container>
+          <Outlet />
+        </Container>
       </Main>
     </StyledAppLayout>
   );

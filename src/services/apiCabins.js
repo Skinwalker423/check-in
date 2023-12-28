@@ -25,3 +25,30 @@ export async function deleteCabin(id) {
 
   return data;
 }
+export async function createCabin({
+  name,
+  maxCapacity,
+  regularPrice,
+  discount,
+  description,
+}) {
+  const { data, error } = await supabase
+    .from("cabins")
+    .insert([
+      {
+        name,
+        maxCapacity,
+        regularPrice,
+        discount,
+        description,
+      },
+    ])
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error("problem creating cabin");
+  }
+
+  return data;
+}

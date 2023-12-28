@@ -44,13 +44,21 @@ const Label = styled.label`
   font-weight: 500;
 `;
 
-// const Error = styled.span`
-//   font-size: 1.4rem;
-//   color: var(--color-red-700);
-// `;
+const Error = styled.span`
+  font-size: 1.4rem;
+  color: var(--color-red-700);
+`;
 
 function CreateCabinForm() {
-  const { register, handleSubmit, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    getValues,
+    formState,
+  } = useForm();
+
+  const { errors } = formState;
 
   const queryClient = useQueryClient();
 
@@ -79,15 +87,24 @@ function CreateCabinForm() {
     mutate(data);
   };
 
+  const onError = (errors) => {
+    console.log("errors", errors);
+  };
+
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSubmit, onError)}>
       <FormRow>
         <Label htmlFor='name'>Cabin name</Label>
         <Input
           type='text'
           id='name'
-          {...register("name")}
+          {...register("name", {
+            required: "Please enter a name",
+          })}
         />
+        {errors?.name?.message && (
+          <Error>{errors.name?.message}</Error>
+        )}
       </FormRow>
 
       <FormRow>
@@ -97,8 +114,17 @@ function CreateCabinForm() {
         <Input
           type='number'
           id='maxCapacity'
-          {...register("maxCapacity")}
+          {...register("maxCapacity", {
+            required: "Max capacity required",
+            min: {
+              value: 1,
+              message: "Minimum has to be 1",
+            },
+          })}
         />
+        {errors?.maxCapacity?.message && (
+          <Error>{errors.maxCapacity?.message}</Error>
+        )}
       </FormRow>
 
       <FormRow>
@@ -106,8 +132,17 @@ function CreateCabinForm() {
         <Input
           type='number'
           id='regularPrice'
-          {...register("regularPrice")}
+          {...register("regularPrice", {
+            required: "Regular price required",
+            min: {
+              value: 1,
+              message: "Price has to be at least 1",
+            },
+          })}
         />
+        {errors?.regularPrice?.message && (
+          <Error>{errors.regularPrice?.message}</Error>
+        )}
       </FormRow>
 
       <FormRow>
@@ -116,8 +151,24 @@ function CreateCabinForm() {
           type='number'
           id='discount'
           defaultValue={0}
-          {...register("discount")}
+          {...register("discount", {
+            validate: (value) => {
+              const regPrice = getValues("regularPrice");
+              console.log("reg price", regPrice);
+              console.log(
+                "value",
+                parseInt(value) < parseInt(regPrice)
+              );
+              return (
+                parseInt(value) <= parseInt(regPrice) ||
+                "Discount greater than the price"
+              );
+            },
+          })}
         />
+        {errors?.discount?.message && (
+          <Error>{errors.discount?.message}</Error>
+        )}
       </FormRow>
 
       <FormRow>
@@ -128,8 +179,13 @@ function CreateCabinForm() {
           type='number'
           id='description'
           defaultValue=''
-          {...register("description")}
+          {...register("description", {
+            required: "description required",
+          })}
         />
+        {errors?.description?.message && (
+          <Error>{errors.description?.message}</Error>
+        )}
       </FormRow>
 
       <FormRow>

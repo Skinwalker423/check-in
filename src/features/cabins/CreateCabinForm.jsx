@@ -152,6 +152,9 @@ function CreateCabinForm() {
           id='image'
           accept='image/*'
           disabled={isLoading}
+          {...register("image", {
+            required: "Upload an image",
+          })}
         />
       </FormRow>
 

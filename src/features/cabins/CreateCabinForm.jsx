@@ -25,7 +25,7 @@ function CreateCabinForm() {
 
   const queryClient = useQueryClient();
 
-  const { mutate, isLoading } = useMutation({
+  const { isLoading } = useMutation({
     mutationFn: createCabin,
     onSuccess: () => {
       toast.success("successfully created a cabin");
@@ -47,7 +47,7 @@ function CreateCabinForm() {
 
   const onSubmit = (data) => {
     console.log("data", data);
-    mutate(data);
+    mutate({ ...data, image: data.image.at(0) });
   };
 
   const onError = (errors) => {
@@ -147,7 +147,10 @@ function CreateCabinForm() {
         />
       </FormRow>
 
-      <FormRow label={"Cabin Photo"}>
+      <FormRow
+        label={"Cabin Photo"}
+        error={errors?.image?.message}
+      >
         <FileInput
           id='image'
           accept='image/*'

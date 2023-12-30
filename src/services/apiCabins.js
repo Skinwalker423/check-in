@@ -1,4 +1,5 @@
 import supabase from "./supabase";
+import { supabaseUrl } from "./supabase";
 
 export async function getCabins() {
   const { data, error } = await supabase
@@ -26,6 +27,8 @@ export async function deleteCabin(id) {
   return data;
 }
 export async function createCabin(cabin) {
+  const imageName = `${Math.random()}-${cabin.image.name}`;
+
   const { data, error } = await supabase
     .from("cabins")
     .insert([cabin])

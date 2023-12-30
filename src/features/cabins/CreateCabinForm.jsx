@@ -25,7 +25,7 @@ function CreateCabinForm() {
 
   const queryClient = useQueryClient();
 
-  const { isLoading } = useMutation({
+  const { isLoading, mutate } = useMutation({
     mutationFn: createCabin,
     onSuccess: () => {
       toast.success("successfully created a cabin");

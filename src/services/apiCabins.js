@@ -27,11 +27,14 @@ export async function deleteCabin(id) {
   return data;
 }
 export async function createCabin(cabin) {
-  const imageName = `${Math.random()}-${cabin.image.name}`;
+  const imageName = `${Math.random()}-${
+    cabin.image.name
+  }`.replace("/", "");
+  const imagePath = `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
 
   const { data, error } = await supabase
     .from("cabins")
-    .insert([cabin])
+    .insert([{ ...cabin, image: imagePath }])
     .select();
 
   if (error) {

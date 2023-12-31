@@ -7,6 +7,8 @@ import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
 import { deleteCabin } from "../../services/apiCabins";
 import Spinner from "../../ui/Spinner";
+import { useState } from "react";
+import CreateCabinForm from "./CreateCabinForm";
 
 const TableRow = styled.div`
   display: grid;
@@ -56,6 +58,7 @@ const CabinRow = ({ cabin }) => {
     discount,
     id,
   } = cabin;
+  const [showForm, setShowForm] = useState(false);
   const queryClient = useQueryClient();
   const { mutate, isLoading } = useMutation({
     mutationFn: (id) => deleteCabin(id),
@@ -78,22 +81,34 @@ const CabinRow = ({ cabin }) => {
   });
 
   return (
-    <TableRow role='row'>
-      <Img
-        src={image || "/cabins/cabin-008.jpg"}
-        alt={name}
-      />
-      <Cabin>{name}</Cabin>
-      <div>Fits up to {maxCapacity}</div>
-      <Price>{regularPrice}</Price>
-      <Discount>{formatCurrency(discount)}</Discount>
-      <button
-        disabled={isLoading}
-        onClick={() => mutate(id)}
-      >
-        {isLoading ? <Spinner /> : "Delete"}
-      </button>
-    </TableRow>
+    <>
+      <TableRow role='row'>
+        <Img
+          src={image || "/cabins/cabin-008.jpg"}
+          alt={name}
+        />
+        <Cabin>{name}</Cabin>
+        <div>Fits up to {maxCapacity}</div>
+        <Price>{regularPrice}</Price>
+        <Discount>{formatCurrency(discount)}</Discount>
+        <div>
+          <button
+            disabled={isLoading}
+            onClick={() => setShowForm((prev) => !prev)}
+          >
+            {isLoading ? <Spinner /> : "Edit"}
+          </button>
+
+          <button
+            disabled={isLoading}
+            onClick={() => mutate(id)}
+          >
+            {isLoading ? <Spinner /> : "Delete"}
+          </button>
+        </div>
+      </TableRow>
+      {showForm && <CreateCabinForm />}
+    </>
   );
 };
 

@@ -59,3 +59,36 @@ export async function createCabin(cabin) {
 
   return data;
 }
+export async function updateCabin(cabin) {
+  const imageName = `${Math.random()}-${
+    cabin.image.name
+  }`.replace("/", "");
+  const imagePath = `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
+
+  const { data, error } = await supabase
+    .from("cabins")
+    .update({ ...cabin, image: imagePath })
+    .eq("some_column", "someValue")
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error("problem creating cabin");
+  }
+
+  const { data: uploadData, error: uploadError } =
+    await supabase.storage
+      .from("cabin-images")
+      .upload(imageName, cabin.image);
+
+  console.log("upload data", uploadData);
+
+  if (uploadError) {
+    console.error(uploadError);
+    throw new Error(
+      "problem uploading image. Try updating the image again."
+    );
+  }
+
+  return data;
+}

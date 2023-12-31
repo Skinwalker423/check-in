@@ -60,15 +60,20 @@ export async function createCabin(cabin) {
   return data;
 }
 export async function updateCabin(cabin) {
+  console.log("cabin image", cabin.image);
   const imageName = `${Math.random()}-${
     cabin.image.name
   }`.replace("/", "");
-  const imagePath = `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
+  const imagePath = cabin.image?.name
+    ? `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`
+    : cabin.image;
+
+  console.log("image path", imagePath);
 
   const { data, error } = await supabase
     .from("cabins")
     .update({ ...cabin, image: imagePath })
-    .eq("some_column", "someValue")
+    .eq("id", cabin.id)
     .select();
 
   if (error) {
@@ -76,18 +81,20 @@ export async function updateCabin(cabin) {
     throw new Error("problem creating cabin");
   }
 
-  const { data: uploadData, error: uploadError } =
-    await supabase.storage
-      .from("cabin-images")
-      .upload(imageName, cabin.image);
+  if (cabin.image?.name) {
+    const { data: uploadData, error: uploadError } =
+      await supabase.storage
+        .from("cabin-images")
+        .upload(imageName, cabin.image);
 
-  console.log("upload data", uploadData);
+    console.log("upload data", uploadData);
 
-  if (uploadError) {
-    console.error(uploadError);
-    throw new Error(
-      "problem uploading image. Try updating the image again."
-    );
+    if (uploadError) {
+      console.error(uploadError);
+      throw new Error(
+        "problem uploading image. Try updating the image again."
+      );
+    }
   }
 
   return data;

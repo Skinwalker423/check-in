@@ -12,7 +12,7 @@ import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import FormRow from "../../ui/FormRow";
 
-import { createCabin } from "../../services/apiCabins";
+import { updateCabin } from "../../services/apiCabins";
 
 function EditCabinForm({ cabinToEdit }) {
   const {
@@ -21,24 +21,20 @@ function EditCabinForm({ cabinToEdit }) {
     reset,
     getValues,
     formState,
-  } = useForm();
+  } = useForm({
+    defaultValues: { ...cabinToEdit },
+  });
 
-  const {
-    name,
-    maxCapacity,
-    regularPrice,
-    discount,
-    description,
-  } = cabinToEdit;
+  console.log(cabinToEdit);
 
   const { errors } = formState;
 
   const queryClient = useQueryClient();
 
   const { isLoading, mutate } = useMutation({
-    mutationFn: createCabin,
+    mutationFn: updateCabin,
     onSuccess: () => {
-      toast.success("successfully created a cabin");
+      toast.success("successfully updated cabin");
       queryClient.invalidateQueries({
         queryKey: ["cabins"],
       });
@@ -57,7 +53,15 @@ function EditCabinForm({ cabinToEdit }) {
 
   const onSubmit = (data) => {
     console.log("data", data);
-    mutate({ ...data, image: data.image[0] });
+    console.log("image type", typeof data.image);
+
+    mutate({
+      ...data,
+      image:
+        typeof data.image === "object"
+          ? data.image[0]
+          : data.image,
+    });
   };
 
   const onError = (errors) => {
@@ -74,7 +78,6 @@ function EditCabinForm({ cabinToEdit }) {
           type='text'
           id='name'
           disabled={isLoading}
-          value={name}
           {...register("name", {
             required: "Please enter a name",
           })}
@@ -89,7 +92,6 @@ function EditCabinForm({ cabinToEdit }) {
           type='number'
           id='maxCapacity'
           disabled={isLoading}
-          value={maxCapacity}
           {...register("maxCapacity", {
             required: "Max capacity required",
             min: {
@@ -108,7 +110,6 @@ function EditCabinForm({ cabinToEdit }) {
           type='number'
           id='regularPrice'
           disabled={isLoading}
-          value={regularPrice}
           {...register("regularPrice", {
             required: "Regular price required",
             min: {
@@ -127,7 +128,6 @@ function EditCabinForm({ cabinToEdit }) {
           type='number'
           id='discount'
           disabled={isLoading}
-          value={discount}
           {...register("discount", {
             validate: (value) => {
               const regPrice = getValues("regularPrice");
@@ -153,7 +153,6 @@ function EditCabinForm({ cabinToEdit }) {
           type='number'
           id='description'
           disabled={isLoading}
-          value={description}
           {...register("description", {
             required: "description required",
           })}
@@ -168,9 +167,7 @@ function EditCabinForm({ cabinToEdit }) {
           id='image'
           accept='image/*'
           disabled={isLoading}
-          {...register("image", {
-            required: "Upload an image",
-          })}
+          {...register("image")}
         />
       </FormRow>
 

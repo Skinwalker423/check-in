@@ -14,7 +14,7 @@ import FormRow from "../../ui/FormRow";
 
 import { createCabin } from "../../services/apiCabins";
 
-function CreateCabinForm() {
+function EditCabinForm({ cabinToEdit }) {
   const {
     register,
     handleSubmit,
@@ -22,6 +22,14 @@ function CreateCabinForm() {
     getValues,
     formState,
   } = useForm();
+
+  const {
+    name,
+    maxCapacity,
+    regularPrice,
+    discount,
+    description,
+  } = cabinToEdit;
 
   const { errors } = formState;
 
@@ -66,6 +74,7 @@ function CreateCabinForm() {
           type='text'
           id='name'
           disabled={isLoading}
+          value={name}
           {...register("name", {
             required: "Please enter a name",
           })}
@@ -80,6 +89,7 @@ function CreateCabinForm() {
           type='number'
           id='maxCapacity'
           disabled={isLoading}
+          value={maxCapacity}
           {...register("maxCapacity", {
             required: "Max capacity required",
             min: {
@@ -98,6 +108,7 @@ function CreateCabinForm() {
           type='number'
           id='regularPrice'
           disabled={isLoading}
+          value={regularPrice}
           {...register("regularPrice", {
             required: "Regular price required",
             min: {
@@ -116,7 +127,7 @@ function CreateCabinForm() {
           type='number'
           id='discount'
           disabled={isLoading}
-          defaultValue={0}
+          value={discount}
           {...register("discount", {
             validate: (value) => {
               const regPrice = getValues("regularPrice");
@@ -142,7 +153,7 @@ function CreateCabinForm() {
           type='number'
           id='description'
           disabled={isLoading}
-          defaultValue=''
+          value={description}
           {...register("description", {
             required: "description required",
           })}
@@ -178,4 +189,4 @@ function CreateCabinForm() {
   );
 }
 
-export default CreateCabinForm;
+export default EditCabinForm;

@@ -8,7 +8,7 @@ import { formatCurrency } from "../../utils/helpers";
 import { deleteCabin } from "../../services/apiCabins";
 import Spinner from "../../ui/Spinner";
 import { useState } from "react";
-import CreateCabinForm from "./CreateCabinForm";
+import EditCabinForm from "./EditCabinForm";
 
 const TableRow = styled.div`
   display: grid;
@@ -47,6 +47,11 @@ const Discount = styled.div`
   font-family: "Sono";
   font-weight: 500;
   color: var(--color-green-700);
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  gap: 2rem;
 `;
 
 const CabinRow = ({ cabin }) => {
@@ -91,7 +96,7 @@ const CabinRow = ({ cabin }) => {
         <div>Fits up to {maxCapacity}</div>
         <Price>{regularPrice}</Price>
         <Discount>{formatCurrency(discount)}</Discount>
-        <div>
+        <Wrapper>
           <button
             disabled={isLoading}
             onClick={() => setShowForm((prev) => !prev)}
@@ -105,9 +110,9 @@ const CabinRow = ({ cabin }) => {
           >
             {isLoading ? <Spinner /> : "Delete"}
           </button>
-        </div>
+        </Wrapper>
       </TableRow>
-      {showForm && <CreateCabinForm />}
+      {showForm && <EditCabinForm cabinToEdit={cabin} />}
     </>
   );
 };

@@ -14,7 +14,7 @@ import FormRow from "../../ui/FormRow";
 
 import { updateCabin } from "../../services/apiCabins";
 
-function EditCabinForm({ cabinToEdit }) {
+function EditCabinForm({ cabinToEdit, toggleShowForm }) {
   const {
     register,
     handleSubmit,
@@ -24,8 +24,6 @@ function EditCabinForm({ cabinToEdit }) {
   } = useForm({
     defaultValues: { ...cabinToEdit },
   });
-
-  console.log(cabinToEdit);
 
   const { errors } = formState;
 
@@ -39,6 +37,7 @@ function EditCabinForm({ cabinToEdit }) {
         queryKey: ["cabins"],
       });
       reset();
+      toggleShowForm();
     },
     onError: (err) => {
       toast.error(err.message, {
@@ -52,9 +51,6 @@ function EditCabinForm({ cabinToEdit }) {
   });
 
   const onSubmit = (data) => {
-    console.log("data", data);
-    console.log("image type", typeof data.image);
-
     mutate({
       ...data,
       image:
@@ -131,11 +127,7 @@ function EditCabinForm({ cabinToEdit }) {
           {...register("discount", {
             validate: (value) => {
               const regPrice = getValues("regularPrice");
-              console.log("reg price", regPrice);
-              console.log(
-                "value",
-                parseInt(value) < parseInt(regPrice)
-              );
+
               return (
                 parseInt(value) <= parseInt(regPrice) ||
                 "Discount greater than the price"

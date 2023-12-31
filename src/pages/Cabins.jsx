@@ -7,14 +7,16 @@ import CreateCabinForm from "../features/cabins/CreateCabinForm";
 
 function Cabins() {
   const [showForm, setShowForm] = useState(false);
+
+  const toggleShowForm = () => {
+    setShowForm((prevState) => !prevState);
+  };
+
   return (
     <Row type='vertical'>
       <Heading as='h1'>All cabins</Heading>
       <CabinTable />
-      <Button
-        type='button'
-        onClick={() => setShowForm((prev) => !prev)}
-      >
+      <Button type='button' onClick={toggleShowForm}>
         {showForm ? "Hide Form" : "Add New Cabin"}
       </Button>
       {showForm && <CreateCabinForm />}

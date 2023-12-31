@@ -85,6 +85,10 @@ const CabinRow = ({ cabin }) => {
     },
   });
 
+  const toggleShowForm = () => {
+    setShowForm((prevState) => !prevState);
+  };
+
   return (
     <>
       <TableRow role='row'>
@@ -99,7 +103,7 @@ const CabinRow = ({ cabin }) => {
         <Wrapper>
           <button
             disabled={isLoading}
-            onClick={() => setShowForm((prev) => !prev)}
+            onClick={toggleShowForm}
           >
             {isLoading ? <Spinner /> : "Edit"}
           </button>
@@ -112,7 +116,12 @@ const CabinRow = ({ cabin }) => {
           </button>
         </Wrapper>
       </TableRow>
-      {showForm && <EditCabinForm cabinToEdit={cabin} />}
+      {showForm && (
+        <EditCabinForm
+          cabinToEdit={cabin}
+          toggleShowForm={toggleShowForm}
+        />
+      )}
     </>
   );
 };

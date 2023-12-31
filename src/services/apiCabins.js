@@ -42,12 +42,9 @@ export async function createCabin(cabin) {
     throw new Error("problem creating cabin");
   }
 
-  const { data: uploadData, error: uploadError } =
-    await supabase.storage
-      .from("cabin-images")
-      .upload(imageName, cabin.image);
-
-  console.log("upload data", uploadData);
+  const { error: uploadError } = await supabase.storage
+    .from("cabin-images")
+    .upload(imageName, cabin.image);
 
   if (uploadError) {
     console.error(uploadError);
@@ -60,15 +57,12 @@ export async function createCabin(cabin) {
   return data;
 }
 export async function updateCabin(cabin) {
-  console.log("cabin image", cabin.image);
   const imageName = `${Math.random()}-${
     cabin.image.name
   }`.replace("/", "");
   const imagePath = cabin.image?.name
     ? `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`
     : cabin.image;
-
-  console.log("image path", imagePath);
 
   const { data, error } = await supabase
     .from("cabins")
@@ -82,12 +76,9 @@ export async function updateCabin(cabin) {
   }
 
   if (cabin.image?.name) {
-    const { data: uploadData, error: uploadError } =
-      await supabase.storage
-        .from("cabin-images")
-        .upload(imageName, cabin.image);
-
-    console.log("upload data", uploadData);
+    const { error: uploadError } = await supabase.storage
+      .from("cabin-images")
+      .upload(imageName, cabin.image);
 
     if (uploadError) {
       console.error(uploadError);

@@ -25,28 +25,6 @@ function CreateCabinForm() {
 
   const { errors } = formState;
 
-  const queryClient = useQueryClient();
-
-  const { isLoading, mutate } = useMutation({
-    mutationFn: createCabin,
-    onSuccess: () => {
-      toast.success("successfully created a cabin");
-      queryClient.invalidateQueries({
-        queryKey: ["cabins"],
-      });
-      reset();
-    },
-    onError: (err) => {
-      toast.error(err.message, {
-        duration: 7000,
-        style: {
-          backgroundColor: "red",
-          color: "white",
-        },
-      });
-    },
-  });
-
   const onSubmit = (data) => {
     console.log("data", data);
     mutate({ ...data, image: data.image[0] });

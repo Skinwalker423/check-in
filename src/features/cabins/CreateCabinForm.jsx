@@ -1,8 +1,3 @@
-import {
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
-import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 
 import Input from "../../ui/Input";
@@ -11,23 +6,34 @@ import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import FormRow from "../../ui/FormRow";
-
-import { createCabin } from "../../services/apiCabins";
+import useCreateCabin from "./useCreateCabin";
 
 function CreateCabinForm() {
   const {
     register,
     handleSubmit,
-    reset,
     getValues,
     formState,
+    reset,
   } = useForm();
 
   const { errors } = formState;
 
+  const { createCabin, isCreating } = useCreateCabin();
+
   const onSubmit = (data) => {
     console.log("data", data);
-    mutate({ ...data, image: data.image[0] });
+    createCabin(
+      {
+        ...data,
+        image: data.image[0],
+      },
+      {
+        onSuccess: () => {
+          reset();
+        },
+      }
+    );
   };
 
   const onError = (errors) => {
@@ -43,7 +49,7 @@ function CreateCabinForm() {
         <Input
           type='text'
           id='name'
-          disabled={isLoading}
+          disabled={isCreating}
           {...register("name", {
             required: "Please enter a name",
           })}
@@ -57,7 +63,7 @@ function CreateCabinForm() {
         <Input
           type='number'
           id='maxCapacity'
-          disabled={isLoading}
+          disabled={isCreating}
           {...register("maxCapacity", {
             required: "Max capacity required",
             min: {
@@ -75,7 +81,7 @@ function CreateCabinForm() {
         <Input
           type='number'
           id='regularPrice'
-          disabled={isLoading}
+          disabled={isCreating}
           {...register("regularPrice", {
             required: "Regular price required",
             min: {
@@ -93,7 +99,7 @@ function CreateCabinForm() {
         <Input
           type='number'
           id='discount'
-          disabled={isLoading}
+          disabled={isCreating}
           defaultValue={0}
           {...register("discount", {
             validate: (value) => {
@@ -119,7 +125,7 @@ function CreateCabinForm() {
         <Textarea
           type='number'
           id='description'
-          disabled={isLoading}
+          disabled={isCreating}
           defaultValue=''
           {...register("description", {
             required: "description required",
@@ -134,7 +140,7 @@ function CreateCabinForm() {
         <FileInput
           id='image'
           accept='image/*'
-          disabled={isLoading}
+          disabled={isCreating}
           {...register("image", {
             required: "Upload an image",
           })}
@@ -144,13 +150,13 @@ function CreateCabinForm() {
       <FormRow>
         {/* type is an HTML attribute! */}
         <Button
-          disabled={isLoading}
+          disabled={isCreating}
           variation='secondary'
           type='reset'
         >
           Cancel
         </Button>
-        <Button disabled={isLoading}>Edit cabin</Button>
+        <Button disabled={isCreating}>Edit cabin</Button>
       </FormRow>
     </Form>
   );

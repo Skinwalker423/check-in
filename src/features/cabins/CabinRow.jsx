@@ -1,14 +1,10 @@
-import {
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
-import toast from "react-hot-toast";
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
-import { deleteCabin } from "../../services/apiCabins";
+
 import Spinner from "../../ui/Spinner";
 import { useState } from "react";
 import EditCabinForm from "./EditCabinForm";
+import useDeleteCabin from "./useDeleteCabin";
 
 const TableRow = styled.div`
   display: grid;
@@ -64,26 +60,7 @@ const CabinRow = ({ cabin }) => {
     id,
   } = cabin;
   const [showForm, setShowForm] = useState(false);
-  const queryClient = useQueryClient();
-  const { mutate, isLoading } = useMutation({
-    mutationFn: (id) => deleteCabin(id),
-    mutationKey: ["delete cabin"],
-    onSuccess: () => {
-      toast.success("Successfully deleted cabin");
-      queryClient.invalidateQueries({
-        queryKey: ["cabins"],
-      });
-    },
-    onError: (err) => {
-      toast.error(err.message, {
-        duration: 7000,
-        style: {
-          backgroundColor: "red",
-          color: "white",
-        },
-      });
-    },
-  });
+  const { deleteCabin, isDeleting } = useDeleteCabin();
 
   const toggleShowForm = () => {
     setShowForm((prevState) => !prevState);
@@ -106,17 +83,17 @@ const CabinRow = ({ cabin }) => {
         )}
         <Wrapper>
           <button
-            disabled={isLoading}
+            disabled={isDeleting}
             onClick={toggleShowForm}
           >
-            {isLoading ? <Spinner /> : "Edit"}
+            {isDeleting ? <Spinner /> : "Edit"}
           </button>
 
           <button
-            disabled={isLoading}
-            onClick={() => mutate(id)}
+            disabled={isDeleting}
+            onClick={() => deleteCabin(id)}
           >
-            {isLoading ? <Spinner /> : "Delete"}
+            {isDeleting ? <Spinner /> : "Delete"}
           </button>
         </Wrapper>
       </TableRow>

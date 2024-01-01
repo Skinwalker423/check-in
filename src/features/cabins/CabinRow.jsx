@@ -99,7 +99,11 @@ const CabinRow = ({ cabin }) => {
         <Cabin>{name}</Cabin>
         <div>Fits up to {maxCapacity}</div>
         <Price>{regularPrice}</Price>
-        <Discount>{formatCurrency(discount)}</Discount>
+        {!discount ? (
+          <Discount>{formatCurrency(discount)}</Discount>
+        ) : (
+          <span>&mdash;</span>
+        )}
         <Wrapper>
           <button
             disabled={isLoading}

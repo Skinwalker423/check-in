@@ -1,10 +1,15 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
 
-import Spinner from "../../ui/Spinner";
-import { useState } from "react";
-import EditCabinForm from "./EditCabinForm";
 import useDeleteCabin from "./useDeleteCabin";
+import useCreateCabin from "./useCreateCabin";
+
+import Spinner from "../../ui/Spinner";
+import EditCabinForm from "./EditCabinForm";
+import { HiPencil } from "react-icons/hi2";
+import { HiSquare2Stack } from "react-icons/hi2";
+import { HiMiniTrash } from "react-icons/hi2";
 
 const TableRow = styled.div`
   display: grid;
@@ -45,10 +50,10 @@ const Discount = styled.div`
   color: var(--color-green-700);
 `;
 
-const Wrapper = styled.div`
-  display: flex;
-  gap: 2rem;
-`;
+// const Wrapper = styled.div`
+//   display: flex;
+//   gap: 2rem;
+// `;
 
 const CabinRow = ({ cabin }) => {
   const {
@@ -61,9 +66,21 @@ const CabinRow = ({ cabin }) => {
   } = cabin;
   const [showForm, setShowForm] = useState(false);
   const { deleteCabin, isDeleting } = useDeleteCabin();
+  const { createCabin, isCreating } = useCreateCabin();
 
   const toggleShowForm = () => {
     setShowForm((prevState) => !prevState);
+  };
+
+  const handleCopyCabin = () => {
+    console.log("copying");
+    createCabin({
+      name: `${cabin.name}-copy`,
+      image,
+      maxCapacity,
+      regularPrice,
+      discount,
+    });
   };
 
   return (
@@ -81,21 +98,27 @@ const CabinRow = ({ cabin }) => {
         ) : (
           <span>&mdash;</span>
         )}
-        <Wrapper>
+        <div>
           <button
-            disabled={isDeleting}
+            onClick={handleCopyCabin}
+            disabled={isDeleting || isCreating}
+          >
+            <HiSquare2Stack />
+          </button>
+          <button
+            disabled={isDeleting || isCreating}
             onClick={toggleShowForm}
           >
-            {isDeleting ? <Spinner /> : "Edit"}
+            <HiPencil />
           </button>
 
           <button
-            disabled={isDeleting}
+            disabled={isDeleting || isCreating}
             onClick={() => deleteCabin(id)}
           >
-            {isDeleting ? <Spinner /> : "Delete"}
+            {isDeleting ? <Spinner /> : <HiMiniTrash />}
           </button>
-        </Wrapper>
+        </div>
       </TableRow>
       {showForm && (
         <EditCabinForm

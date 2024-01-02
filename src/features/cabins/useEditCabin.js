@@ -17,8 +17,6 @@ const useEditCabin = () => {
         queryClient.invalidateQueries({
           queryKey: ["cabins"],
         });
-        reset();
-        toggleShowForm();
       },
       onError: (err) => {
         toast.error(err.message, {

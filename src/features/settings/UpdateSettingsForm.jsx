@@ -6,6 +6,7 @@ import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 import Spinner from "../../ui/Spinner";
+import ErrorFallback from "../../ui/ErrorFallback";
 
 const errorsConfig = {
   minBookingLength: "enter min length",
@@ -24,15 +25,13 @@ const defaultErrors = {
 function UpdateSettingsForm() {
   const [errorMsg, setErrorMsg] = useState(defaultErrors);
   const { error, isLoading, settings } = useSettings();
-  const { isUpdating } = useEditSetting();
-
-  console.log("settings", settings, error, isLoading);
+  const { isUpdating, updateSetting } = useEditSetting();
 
   const handleOnBlur = (e, editedValue) => {
     setErrorMsg(defaultErrors);
     const value = e.target?.value;
-    console.log("value", editedValue);
-    if (!value) {
+
+    if (!value || parseInt(value) === 0) {
       setErrorMsg((prevErrors) => {
         return {
           ...prevErrors,
@@ -42,8 +41,12 @@ function UpdateSettingsForm() {
 
       return;
     }
-  };
+    if (parseInt(settings[editedValue]) === parseInt(value))
+      return;
 
+    updateSetting({ [editedValue]: value });
+  };
+  if (error) return <ErrorFallback>{error}</ErrorFallback>;
   if (isLoading) return <Spinner />;
   console.log("errors", errorMsg);
 
@@ -71,6 +74,9 @@ function UpdateSettingsForm() {
           type='number'
           id='maxBookingLength'
           defaultValue={settings?.maxBookingLength}
+          onBlur={(e) =>
+            handleOnBlur(e, "maxBookingLength")
+          }
         />
       </FormRow>
       <FormRow
@@ -81,6 +87,9 @@ function UpdateSettingsForm() {
           type='number'
           id='maxGuestsPerBooking'
           defaultValue={settings?.maxBookingLength}
+          onBlur={(e) =>
+            handleOnBlur(e, "maxGuestsPerBooking")
+          }
         />
       </FormRow>
       <FormRow
@@ -91,6 +100,7 @@ function UpdateSettingsForm() {
           type='number'
           id='breakfastPrice'
           defaultValue={settings?.breakfastPrice}
+          onBlur={(e) => handleOnBlur(e, "breakfastPrice")}
         />
       </FormRow>
     </Form>

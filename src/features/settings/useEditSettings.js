@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 import { updateSetting as updateSettingApi } from "../../services/apiSettings";
 
-const useEditSetting = () => {
+export const useEditSetting = () => {
   const queryClient = useQueryClient();
 
   const { isLoading: isUpdating, mutate: updateSetting } =
@@ -31,5 +31,3 @@ const useEditSetting = () => {
 
   return { updateSetting, isUpdating };
 };
-
-export default useEditSetting;

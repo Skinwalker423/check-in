@@ -1,96 +1,98 @@
-import { useForm } from "react-hook-form";
-
+import { useState } from "react";
 import { useSettings } from "./useSettings";
+import { useEditSetting } from "./useEditSettings";
 
 import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 import Spinner from "../../ui/Spinner";
 
+const errorsConfig = {
+  minBookingLength: "enter min length",
+  maxBookingLength: "enter max length",
+  breakfastPrice: "Price must be greater than 0",
+  maxGuestsPerBooking: "cannot be empty",
+};
+
+const defaultErrors = {
+  minBookingLength: null,
+  maxBookingLength: null,
+  breakfastPrice: null,
+  maxGuestsPerBooking: null,
+};
+
 function UpdateSettingsForm() {
+  const [errorMsg, setErrorMsg] = useState(defaultErrors);
   const { error, isLoading, settings } = useSettings();
+  const { isUpdating } = useEditSetting();
 
   console.log("settings", settings, error, isLoading);
 
-  const { getValues, register, handleSubmit, formState } =
-    useForm({
-      defaultValues: {
-        ...settings,
-      },
-    });
+  const handleOnBlur = (e, editedValue) => {
+    setErrorMsg(defaultErrors);
+    const value = e.target?.value;
+    console.log("value", editedValue);
+    if (!value) {
+      setErrorMsg((prevErrors) => {
+        return {
+          ...prevErrors,
+          [editedValue]: errorsConfig[editedValue],
+        };
+      });
 
-  const { errors } = formState;
-  const values = getValues();
-  console.log("values", values);
-
-  const onSubmit = () => {
-    console.log("submitted");
+      return;
+    }
   };
-
-  const onError = (errors) => {
-    console.log(errors);
-  };
-
-  console.log("errors", errors);
 
   if (isLoading) return <Spinner />;
+  console.log("errors", errorMsg);
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form>
       <FormRow
         label='Minimum nights/booking'
-        error={errors?.minBookingLength?.message}
+        error={errorMsg?.minBookingLength}
       >
         <Input
           type='number'
-          id='minBookingLength
-          '
+          id='minBookingLength'
+          disabled={isUpdating}
+          onBlur={(e) =>
+            handleOnBlur(e, "minBookingLength")
+          }
           defaultValue={settings?.minBookingLength}
-          {...register("minBookingLength", {
-            required: "enter min nights",
-          })}
         />
       </FormRow>
       <FormRow
         label='Maximum nights/booking'
-        error={errors?.maxBookingLength?.message}
+        error={errorMsg?.maxBookingLength}
       >
         <Input
           type='number'
           id='maxBookingLength'
           defaultValue={settings?.maxBookingLength}
-          {...register("maxBookingLength", {
-            required: "enter max nights",
-          })}
         />
       </FormRow>
       <FormRow
         label='Maximum guests/booking'
-        error={errors?.maxGuestsPerBooking?.message}
+        error={errorMsg?.maxGuestsPerBooking}
       >
         <Input
           type='number'
           id='maxGuestsPerBooking'
           defaultValue={settings?.maxBookingLength}
-          {...register("maxGuestsPerBooking", {
-            required: "enter max guests",
-          })}
         />
       </FormRow>
       <FormRow
         label='Breakfast price'
-        error={errors?.breakfastPrice?.message}
+        error={errorMsg?.breakfastPrice}
       >
         <Input
           type='number'
           id='breakfastPrice'
           defaultValue={settings?.breakfastPrice}
-          {...register("breakfastPrice", {
-            required: "enter breakfast price",
-          })}
         />
       </FormRow>
-      <button type='submit'>Update Settings</button>
     </Form>
   );
 }

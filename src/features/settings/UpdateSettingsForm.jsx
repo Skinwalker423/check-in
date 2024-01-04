@@ -73,6 +73,7 @@ function UpdateSettingsForm() {
         <Input
           type='number'
           id='maxBookingLength'
+          disabled={isUpdating}
           defaultValue={settings?.maxBookingLength}
           onBlur={(e) =>
             handleOnBlur(e, "maxBookingLength")
@@ -86,6 +87,7 @@ function UpdateSettingsForm() {
         <Input
           type='number'
           id='maxGuestsPerBooking'
+          disabled={isUpdating}
           defaultValue={settings?.maxBookingLength}
           onBlur={(e) =>
             handleOnBlur(e, "maxGuestsPerBooking")
@@ -99,6 +101,7 @@ function UpdateSettingsForm() {
         <Input
           type='number'
           id='breakfastPrice'
+          disabled={isUpdating}
           defaultValue={settings?.breakfastPrice}
           onBlur={(e) => handleOnBlur(e, "breakfastPrice")}
         />

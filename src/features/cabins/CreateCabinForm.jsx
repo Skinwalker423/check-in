@@ -8,7 +8,7 @@ import Textarea from "../../ui/Textarea";
 import FormRow from "../../ui/FormRow";
 import useCreateCabin from "./useCreateCabin";
 
-function CreateCabinForm() {
+function CreateCabinForm({ onClose }) {
   const {
     register,
     handleSubmit,
@@ -31,6 +31,7 @@ function CreateCabinForm() {
       {
         onSuccess: () => {
           reset();
+          onClose?.();
         },
       }
     );
@@ -41,7 +42,10 @@ function CreateCabinForm() {
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form
+      type={onClose ? "modal" : "regular"}
+      onSubmit={handleSubmit(onSubmit, onError)}
+    >
       <FormRow
         label={"Cabin Name"}
         error={errors?.name?.message}
@@ -150,6 +154,7 @@ function CreateCabinForm() {
       <FormRow>
         {/* type is an HTML attribute! */}
         <Button
+          onClick={() => onClose?.()}
           disabled={isCreating}
           variation='secondary'
           type='reset'

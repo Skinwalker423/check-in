@@ -22,7 +22,7 @@ const AddCabin = () => {
 
       {showForm && (
         <Modal onClose={onClose}>
-          <CreateCabinForm />
+          <CreateCabinForm onClose={onClose} />
         </Modal>
       )}
     </>

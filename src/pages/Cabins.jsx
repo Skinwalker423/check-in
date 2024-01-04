@@ -1,25 +1,15 @@
-import { useState } from "react";
+import AddCabin from "../features/cabins/AddCabin";
 import CabinTable from "../features/cabins/CabinTable";
-import Button from "../ui/Button";
+
 import Heading from "../ui/Heading";
 import Row from "../ui/Row";
-import CreateCabinForm from "../features/cabins/CreateCabinForm";
 
 function Cabins() {
-  const [showForm, setShowForm] = useState(false);
-
-  const toggleShowForm = () => {
-    setShowForm((prevState) => !prevState);
-  };
-
   return (
     <Row type='vertical'>
       <Heading as='h1'>All cabins</Heading>
       <CabinTable />
-      <Button type='button' onClick={toggleShowForm}>
-        {showForm ? "Hide Form" : "Add New Cabin"}
-      </Button>
-      {showForm && <CreateCabinForm />}
+      <AddCabin />
     </Row>
   );
 }

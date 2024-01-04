@@ -9,13 +9,22 @@ const AddCabin = () => {
   const toggleShowForm = () => {
     setShowForm((prevState) => !prevState);
   };
+
+  const onClose = () => {
+    setShowForm(false);
+  };
+
   return (
     <>
       <Button type='button' onClick={toggleShowForm}>
         {showForm ? "Hide Form" : "Add New Cabin"}
       </Button>
-      {showForm && <CreateCabinForm />}
-      <Modal />
+
+      {showForm && (
+        <Modal onClose={onClose}>
+          <CreateCabinForm />
+        </Modal>
+      )}
     </>
   );
 };

@@ -1,16 +1,13 @@
 import { createContext, useContext, useState } from "react";
-import Button from "./ui/Button";
+import Button from "./Button";
 
-// create context
 const CounterContext = createContext();
-
-// create parent component
 
 const Counter = ({ children }) => {
   const [count, setCount] = useState(0);
 
-  const increase = () => setCount((count) => count++);
-  const decrease = () => setCount((count) => count--);
+  const increase = () => setCount((count) => count + 1);
+  const decrease = () => setCount((count) => count - 1);
 
   const values = {
     count,
@@ -24,8 +21,6 @@ const Counter = ({ children }) => {
     </CounterContext.Provider>
   );
 };
-
-// create child component to implement common tasks
 
 function Count() {
   const { count } = useContext(CounterContext);
@@ -47,7 +42,7 @@ function Increase({ icon }) {
     </Button>
   );
 }
-function Dncrease({ icon }) {
+function Decrease({ icon }) {
   const { decrease } = useContext(CounterContext);
   return (
     <Button
@@ -61,6 +56,9 @@ function Dncrease({ icon }) {
   );
 }
 
-// add child components to parent component
+Counter.Count = Count;
+Counter.Increase = Increase;
+Counter.Decrease = Decrease;
+Counter.Label = Label;
 
 export default Counter;

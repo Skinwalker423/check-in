@@ -21,6 +21,7 @@ import NewUsers from "./pages/Users";
 import GlobalStyles from "./styles/GlobalStyles";
 import AppLayout from "./ui/AppLayout";
 import { Toaster } from "react-hot-toast";
+import CounterPage from "./pages/Counter";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -53,6 +54,10 @@ function App() {
             <Route path='account' element={<Account />} />
             <Route path='settings' element={<Settings />} />
             <Route path='users' element={<NewUsers />} />
+            <Route
+              path='counter'
+              element={<CounterPage />}
+            />
           </Route>
 
           <Route path='login' element={<Login />} />

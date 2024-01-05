@@ -1,4 +1,9 @@
-import { createContext, useContext, useState } from "react";
+import {
+  cloneElement,
+  createContext,
+  useContext,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 
@@ -53,7 +58,7 @@ const Button = styled.button`
   }
 `;
 
-const ModalContext = createContext({});
+export const ModalContext = createContext({});
 
 const Modal = ({ children }) => {
   const [openName, setOpenName] = useState("");
@@ -79,11 +84,16 @@ const Modal = ({ children }) => {
 
 function Content({ children, name }) {
   const { openName, onClose } = useContext(ModalContext);
-  console.log("open name", openName, name);
+  if (name !== openName) return;
+  console.log(typeof children);
   const portal = createPortal(
     <Overlay>
       <StyledModal>
-        <div>{children}</div>
+        {typeof children !== "object"
+          ? children
+          : cloneElement(children, {
+              onClose: onClose,
+            })}
         <Button onClick={onClose}>
           <HiOutlineX />
         </Button>
@@ -98,7 +108,9 @@ function Content({ children, name }) {
 function Open({ children, opens }) {
   const { onOpen } = useContext(ModalContext);
   console.log("opens", opens);
-  return <div onClick={onOpen}>{children}</div>;
+  return cloneElement(children, {
+    onClick: () => onOpen(opens),
+  });
 }
 
 Modal.Open = Open;

@@ -1,3 +1,5 @@
+import { createContext, useContext, useState } from "react";
+import { createPortal } from "react-dom";
 import styled from "styled-components";
 
 import { HiOutlineX } from "react-icons/hi";
@@ -51,8 +53,34 @@ const Button = styled.button`
   }
 `;
 
-const Modal = ({ children, onClose }) => {
+const ModalContext = createContext({});
+
+const Modal = ({ children }) => {
+  const [openName, setOpenName] = useState("");
+
+  const onOpen = setOpenName;
+
+  const onClose = () => {
+    setOpenName("");
+  };
+
+  const values = {
+    openName,
+    onOpen,
+    onClose,
+  };
+
   return (
+    <ModalContext.Provider value={values}>
+      {children}
+    </ModalContext.Provider>
+  );
+};
+
+function Content({ children, name }) {
+  const { openName, onClose } = useContext(ModalContext);
+  console.log("open name", openName, name);
+  const portal = createPortal(
     <Overlay>
       <StyledModal>
         <div>{children}</div>
@@ -60,8 +88,20 @@ const Modal = ({ children, onClose }) => {
           <HiOutlineX />
         </Button>
       </StyledModal>
-    </Overlay>
+    </Overlay>,
+    document.body
   );
-};
+
+  return <div>{openName && portal}</div>;
+}
+
+function Open({ children, opens }) {
+  const { onOpen } = useContext(ModalContext);
+  console.log("opens", opens);
+  return <div onClick={onOpen}>{children}</div>;
+}
+
+Modal.Open = Open;
+Modal.Content = Content;
 
 export default Modal;

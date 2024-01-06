@@ -2,6 +2,8 @@ import {
   cloneElement,
   createContext,
   useContext,
+  useEffect,
+  useRef,
   useState,
 } from "react";
 import { createPortal } from "react-dom";
@@ -84,11 +86,33 @@ const Modal = ({ children }) => {
 
 function Content({ children, name }) {
   const { openName, onClose } = useContext(ModalContext);
-  if (name !== openName) return;
-  console.log(typeof children);
+  const modalRef = useRef();
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(e?.target)
+      ) {
+        console.log(openName);
+        onClose();
+      }
+    };
+
+    document.addEventListener("click", handleClick, true);
+
+    return () => {
+      document.removeEventListener(
+        "click",
+        handleClick,
+        true
+      );
+    };
+  }, [onClose]);
+  if (name !== openName) return null;
   const portal = createPortal(
     <Overlay>
-      <StyledModal>
+      <StyledModal ref={modalRef}>
         {typeof children !== "object"
           ? children
           : cloneElement(children, {
@@ -107,7 +131,7 @@ function Content({ children, name }) {
 
 function Open({ children, opens }) {
   const { onOpen } = useContext(ModalContext);
-  console.log("opens", opens);
+
   return cloneElement(children, {
     onClick: () => onOpen(opens),
   });

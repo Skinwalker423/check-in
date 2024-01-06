@@ -2,14 +2,13 @@ import {
   cloneElement,
   createContext,
   useContext,
-  useEffect,
-  useRef,
   useState,
 } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 
 import { HiOutlineX } from "react-icons/hi";
+import useOutsideElementClick from "../hooks/useOutsideElementClick";
 
 const StyledModal = styled.div`
   position: fixed;
@@ -85,34 +84,12 @@ const Modal = ({ children }) => {
 };
 
 function Content({ children, name }) {
-  const { openName, onClose } = useContext(ModalContext);
-  const modalRef = useRef();
-
-  useEffect(() => {
-    const handleClick = (e) => {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(e?.target)
-      ) {
-        console.log(openName);
-        onClose();
-      }
-    };
-
-    document.addEventListener("click", handleClick, true);
-
-    return () => {
-      document.removeEventListener(
-        "click",
-        handleClick,
-        true
-      );
-    };
-  }, []);
+  const { onClose, openName } = useContext(ModalContext);
+  const { ref } = useOutsideElementClick({ onClose });
   if (name !== openName) return null;
   const portal = createPortal(
     <Overlay>
-      <StyledModal ref={modalRef}>
+      <StyledModal ref={ref}>
         {typeof children !== "object"
           ? children
           : cloneElement(children, {

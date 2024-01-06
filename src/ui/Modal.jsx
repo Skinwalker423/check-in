@@ -108,7 +108,7 @@ function Content({ children, name }) {
         true
       );
     };
-  }, [onClose]);
+  }, []);
   if (name !== openName) return null;
   const portal = createPortal(
     <Overlay>

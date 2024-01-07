@@ -10,6 +10,7 @@ import { HiPencil } from "react-icons/hi2";
 import { HiSquare2Stack } from "react-icons/hi2";
 import { HiMiniTrash } from "react-icons/hi2";
 import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
 
 const TableRow = styled.div`
   display: grid;
@@ -71,7 +72,7 @@ const CabinRow = ({ cabin }) => {
   const handleCopyCabin = () => {
     console.log("copying");
     createCabin({
-      name: `${cabin.name}-copy`,
+      name: `${name}-copy`,
       image,
       maxCapacity,
       regularPrice,
@@ -112,12 +113,20 @@ const CabinRow = ({ cabin }) => {
             </Modal.Content>
           </Modal>
 
-          <button
-            disabled={isDeleting || isCreating}
-            onClick={() => deleteCabin(id)}
-          >
-            {isDeleting ? <Spinner /> : <HiMiniTrash />}
-          </button>
+          <Modal>
+            <Modal.Open opens={"delete"}>
+              <button disabled={isDeleting || isCreating}>
+                {isDeleting ? <Spinner /> : <HiMiniTrash />}
+              </button>
+            </Modal.Open>
+            <Modal.Content name={"delete"}>
+              <ConfirmDelete
+                onConfirm={() => deleteCabin(id)}
+                resourceName={name}
+                disabled={isDeleting || isCreating}
+              />
+            </Modal.Content>
+          </Modal>
         </div>
       </TableRow>
     </>

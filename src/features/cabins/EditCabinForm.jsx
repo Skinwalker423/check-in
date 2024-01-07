@@ -9,7 +9,7 @@ import FormRow from "../../ui/FormRow";
 
 import useEditCabin from "./useEditCabin";
 
-function EditCabinForm({ cabinToEdit, toggleShowForm }) {
+function EditCabinForm({ cabinToEdit, onClose }) {
   const {
     register,
     handleSubmit,
@@ -37,7 +37,7 @@ function EditCabinForm({ cabinToEdit, toggleShowForm }) {
         onSuccess: (data) => {
           console.log("edited data", data);
           reset();
-          toggleShowForm();
+          onClose();
         },
       }
     );
@@ -152,6 +152,7 @@ function EditCabinForm({ cabinToEdit, toggleShowForm }) {
           disabled={isEditing}
           variation='secondary'
           type='reset'
+          onClick={onClose}
         >
           Cancel
         </Button>

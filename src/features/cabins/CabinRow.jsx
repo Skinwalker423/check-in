@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
 
@@ -10,6 +10,7 @@ import EditCabinForm from "./EditCabinForm";
 import { HiPencil } from "react-icons/hi2";
 import { HiSquare2Stack } from "react-icons/hi2";
 import { HiMiniTrash } from "react-icons/hi2";
+import Modal, { ModalContext } from "../../ui/Modal";
 
 const TableRow = styled.div`
   display: grid;
@@ -68,6 +69,10 @@ const CabinRow = ({ cabin }) => {
   const { deleteCabin, isDeleting } = useDeleteCabin();
   const { createCabin, isCreating } = useCreateCabin();
 
+  const { onClose } = useContext(ModalContext);
+
+  console.log("show form", showForm);
+
   const toggleShowForm = () => {
     setShowForm((prevState) => !prevState);
   };
@@ -105,12 +110,23 @@ const CabinRow = ({ cabin }) => {
           >
             <HiSquare2Stack />
           </button>
-          <button
-            disabled={isDeleting || isCreating}
-            onClick={toggleShowForm}
-          >
-            <HiPencil />
-          </button>
+          <Modal>
+            <Modal.Open opens={"edit"}>
+              <button
+                disabled={isDeleting || isCreating}
+                onClick={toggleShowForm}
+              >
+                <HiPencil />
+              </button>
+            </Modal.Open>
+            <Modal.Content name={"edit"}>
+              <EditCabinForm
+                cabinToEdit={cabin}
+                onClose={onClose}
+                toggleShowForm={toggleShowForm}
+              />
+            </Modal.Content>
+          </Modal>
 
           <button
             disabled={isDeleting || isCreating}
@@ -120,12 +136,6 @@ const CabinRow = ({ cabin }) => {
           </button>
         </div>
       </TableRow>
-      {showForm && (
-        <EditCabinForm
-          cabinToEdit={cabin}
-          toggleShowForm={toggleShowForm}
-        />
-      )}
     </>
   );
 };

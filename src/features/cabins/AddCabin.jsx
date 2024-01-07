@@ -11,12 +11,6 @@ const AddCabin = () => {
       <Modal.Content name='create-cabin'>
         <CreateCabinForm />
       </Modal.Content>
-      <Modal.Open opens='table'>
-        <Button>Add New Table</Button>
-      </Modal.Open>
-      <Modal.Content name='table'>
-        Some content
-      </Modal.Content>
     </Modal>
   );
 };

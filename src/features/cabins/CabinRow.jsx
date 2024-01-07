@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
 
@@ -10,7 +9,7 @@ import EditCabinForm from "./EditCabinForm";
 import { HiPencil } from "react-icons/hi2";
 import { HiSquare2Stack } from "react-icons/hi2";
 import { HiMiniTrash } from "react-icons/hi2";
-import Modal, { ModalContext } from "../../ui/Modal";
+import Modal from "../../ui/Modal";
 
 const TableRow = styled.div`
   display: grid;
@@ -69,8 +68,6 @@ const CabinRow = ({ cabin }) => {
   const { deleteCabin, isDeleting } = useDeleteCabin();
   const { createCabin, isCreating } = useCreateCabin();
 
-  const { onClose } = useContext(ModalContext);
-
   const handleCopyCabin = () => {
     console.log("copying");
     createCabin({
@@ -111,10 +108,7 @@ const CabinRow = ({ cabin }) => {
               </button>
             </Modal.Open>
             <Modal.Content name={"edit"}>
-              <EditCabinForm
-                cabinToEdit={cabin}
-                onClose={onClose}
-              />
+              <EditCabinForm cabinToEdit={cabin} />
             </Modal.Content>
           </Modal>
 

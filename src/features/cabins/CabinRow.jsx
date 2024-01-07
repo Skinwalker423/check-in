@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
 
@@ -65,17 +65,11 @@ const CabinRow = ({ cabin }) => {
     discount,
     id,
   } = cabin;
-  const [showForm, setShowForm] = useState(false);
+
   const { deleteCabin, isDeleting } = useDeleteCabin();
   const { createCabin, isCreating } = useCreateCabin();
 
   const { onClose } = useContext(ModalContext);
-
-  console.log("show form", showForm);
-
-  const toggleShowForm = () => {
-    setShowForm((prevState) => !prevState);
-  };
 
   const handleCopyCabin = () => {
     console.log("copying");
@@ -112,10 +106,7 @@ const CabinRow = ({ cabin }) => {
           </button>
           <Modal>
             <Modal.Open opens={"edit"}>
-              <button
-                disabled={isDeleting || isCreating}
-                onClick={toggleShowForm}
-              >
+              <button disabled={isDeleting || isCreating}>
                 <HiPencil />
               </button>
             </Modal.Open>
@@ -123,7 +114,6 @@ const CabinRow = ({ cabin }) => {
               <EditCabinForm
                 cabinToEdit={cabin}
                 onClose={onClose}
-                toggleShowForm={toggleShowForm}
               />
             </Modal.Content>
           </Modal>

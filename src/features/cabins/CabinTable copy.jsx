@@ -28,7 +28,9 @@ export default function CabinTable() {
 
   return (
     <Table columns={"0.6fr 1.8fr 2.2fr 1fr 1fr 1fr"}>
-      <Table.Header>
+      <Table.Header
+        columns={"0.6fr 1.8fr 2.2fr 1fr 1fr 1fr"}
+      >
         <div></div>
         <div>Cabin</div>
         <div>Capacity</div>

@@ -1,13 +1,20 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-// const StyledTable = styled.div`
-//   border: 1px solid var(--color-grey-200);
+const StyledTable = styled.div`
+  border: 1px solid var(--color-grey-200);
+  ${(props) =>
+    css`
+      grid-template-columns: ${props.columns};
+    `}
 
-//   font-size: 1.4rem;
-//   background-color: var(--color-grey-0);
-//   border-radius: 7px;
-//   overflow: hidden;
-// `;
+  background-color: var(--color-grey-0);
+  border-radius: 7px;
+  overflow: hidden;
+`;
+
+StyledTable.defaultProps = {
+  columns: "0.6fr 1.8fr 2.2fr 1fr 1fr 1fr",
+};
 
 const CommonRow = styled.div`
   display: grid;
@@ -36,9 +43,9 @@ const StyledRow = styled(CommonRow)`
   }
 `;
 
-// const StyledBody = styled.section`
-//   margin: 0.4rem 0;
-// `;
+const StyledBody = styled.section`
+  margin: 0.4rem 0;
+`;
 
 // const Footer = styled.footer`
 //   background-color: var(--color-grey-50);
@@ -59,8 +66,9 @@ const StyledRow = styled(CommonRow)`
 //   margin: 2.4rem;
 // `;
 
-const Table = () => {
-  return <div>Table</div>;
+const Table = ({ columns, children }) => {
+  console.log("col", columns);
+  return <StyledTable>{children}</StyledTable>;
 };
 
 function Header({ children }) {
@@ -71,7 +79,12 @@ function Row({ children }) {
   return <StyledRow>{children}</StyledRow>;
 }
 
+function Body({ children }) {
+  return <StyledBody>{children}</StyledBody>;
+}
+
 Table.Header = Header;
 Table.Row = Row;
+Table.Body = Body;
 
 export default Table;

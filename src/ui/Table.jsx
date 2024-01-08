@@ -52,12 +52,12 @@ const StyledBody = styled.section`
 //   }
 // `;
 
-// const Empty = styled.p`
-//   font-size: 1.6rem;
-//   font-weight: 500;
-//   text-align: center;
-//   margin: 2.4rem;
-// `;
+const Empty = styled.p`
+  font-size: 1.6rem;
+  font-weight: 500;
+  text-align: center;
+  margin: 2.4rem;
+`;
 
 const TableContext = createContext();
 
@@ -91,8 +91,9 @@ function Row({ children }) {
   );
 }
 
-function Body({ children }) {
-  return <StyledBody>{children}</StyledBody>;
+function Body({ data, render }) {
+  if (!data.length) return <Empty>No data available</Empty>;
+  return <StyledBody>{data.map(render)}</StyledBody>;
 }
 
 Table.Header = Header;

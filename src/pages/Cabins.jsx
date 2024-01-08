@@ -1,5 +1,5 @@
 import AddCabin from "../features/cabins/AddCabin";
-import CabinTable from "../features/cabins/CabinTable";
+import CabinTable from "../features/cabins/CabinTable copy";
 
 import Heading from "../ui/Heading";
 import Row from "../ui/Row";

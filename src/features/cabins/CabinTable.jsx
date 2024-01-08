@@ -30,7 +30,7 @@ const TableHeader = styled.header`
   padding: 1.6rem 2.4rem;
 `;
 
-export default function CabinTable() {
+export default function CabinTable2() {
   const { cabins, isLoading, error } = useCabins();
 
   if (isLoading) return <Spinner />;

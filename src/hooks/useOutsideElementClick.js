@@ -26,7 +26,7 @@ const useOutsideElementClick = ({
         onCapturePhase
       );
     };
-  }, []);
+  }, [onCapturePhase, onClose]);
 
   return { ref };
 };

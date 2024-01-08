@@ -1,20 +1,13 @@
-import styled, { css } from "styled-components";
+import { createContext, useContext } from "react";
+import styled from "styled-components";
 
 const StyledTable = styled.div`
   border: 1px solid var(--color-grey-200);
-  ${(props) =>
-    css`
-      grid-template-columns: ${props.columns};
-    `}
 
   background-color: var(--color-grey-0);
   border-radius: 7px;
   overflow: hidden;
 `;
-
-StyledTable.defaultProps = {
-  columns: "0.6fr 1.8fr 2.2fr 1fr 1fr 1fr",
-};
 
 const CommonRow = styled.div`
   display: grid;
@@ -66,17 +59,36 @@ const StyledBody = styled.section`
 //   margin: 2.4rem;
 // `;
 
+const TableContext = createContext();
+
 const Table = ({ columns, children }) => {
   console.log("col", columns);
-  return <StyledTable>{children}</StyledTable>;
+  const values = {
+    columns,
+  };
+  return (
+    <TableContext.Provider value={values}>
+      <StyledTable role='table'>{children}</StyledTable>;
+    </TableContext.Provider>
+  );
 };
 
 function Header({ children }) {
-  return <StyledHeader>{children}</StyledHeader>;
+  const { columns } = useContext(TableContext);
+  return (
+    <StyledHeader role='row' as='header' columns={columns}>
+      {children}
+    </StyledHeader>
+  );
 }
 
 function Row({ children }) {
-  return <StyledRow>{children}</StyledRow>;
+  const { columns } = useContext(TableContext);
+  return (
+    <StyledRow role='row' columns={columns}>
+      {children}
+    </StyledRow>
+  );
 }
 
 function Body({ children }) {

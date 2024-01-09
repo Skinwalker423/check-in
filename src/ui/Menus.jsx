@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const StyledMenu = styled.div`
+const Menu = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -60,3 +60,24 @@ const StyledButton = styled.button`
     transition: all 0.3s;
   }
 `;
+
+const Menus = ({ children }) => {
+  return <div>{children}</div>;
+};
+
+function List({ children }) {
+  return <StyledList>{children}</StyledList>;
+}
+function Toggle({ children }) {
+  return <StyledToggle>{children}</StyledToggle>;
+}
+function Button({ children }) {
+  return <StyledButton>{children}</StyledButton>;
+}
+
+Menus.List = List;
+Menus.Toggle = Toggle;
+Menus.Button = Button;
+Menus.Menu = Menu;
+
+export default Menus;

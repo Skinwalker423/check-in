@@ -131,8 +131,8 @@ const CabinRow = ({ cabin }) => {
           </Modal>
           <Menus>
             <Menus.Menu>
-              <Menus.Toggle />
-              <Menus.List>
+              <Menus.Toggle id={id} />
+              <Menus.List id={id}>
                 <Menus.Button>Duplicate</Menus.Button>
                 <Menus.Button>Edit</Menus.Button>
                 <Menus.Button>Delete</Menus.Button>

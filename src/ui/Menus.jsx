@@ -36,6 +36,13 @@ const StyledList = styled.ul`
   top: ${(props) => props.position.y}px;
 `;
 
+StyledList.defaultProps = {
+  position: {
+    x: 0,
+    y: 0,
+  },
+};
+
 const StyledButton = styled.button`
   width: 100%;
   text-align: left;

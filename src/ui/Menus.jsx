@@ -1,3 +1,4 @@
+import { createContext, useState } from "react";
 import styled from "styled-components";
 
 const Menu = styled.div`
@@ -68,8 +69,20 @@ const StyledButton = styled.button`
   }
 `;
 
+const MenusContext = createContext();
+
 const Menus = ({ children }) => {
-  return <div>{children}</div>;
+  const [openId, setOpenId] = useState("");
+
+  const values = {
+    openId,
+  };
+
+  return (
+    <MenusContext.Provider value={values}>
+      {children}
+    </MenusContext.Provider>
+  );
 };
 
 function List({ children }) {

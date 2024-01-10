@@ -134,9 +134,18 @@ const CabinRow = ({ cabin }) => {
           <Menus.Menu>
             <Menus.Toggle id={id} />
             <Menus.List id={id}>
-              <Menus.Button>Duplicate</Menus.Button>
-              <Menus.Button>Edit</Menus.Button>
-              <Menus.Button>Delete</Menus.Button>
+              <Menus.Button
+                onClick={handleCopyCabin}
+                icon={<HiSquare2Stack />}
+              >
+                Duplicate
+              </Menus.Button>
+              <Menus.Button icon={<HiPencil />}>
+                Edit
+              </Menus.Button>
+              <Menus.Button icon={<HiMiniTrash />}>
+                Delete
+              </Menus.Button>
             </Menus.List>
           </Menus.Menu>
         </StyledActions>

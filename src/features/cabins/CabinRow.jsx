@@ -97,7 +97,7 @@ const CabinRow = ({ cabin }) => {
         ) : (
           <span>&mdash;</span>
         )}
-        <div>
+        <div id={id} style={{ position: "relative" }}>
           <button
             onClick={handleCopyCabin}
             disabled={isDeleting || isCreating}

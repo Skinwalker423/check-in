@@ -7,6 +7,7 @@ const Menu = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  position: relative;
 `;
 
 const StyledToggle = styled.button`
@@ -29,7 +30,7 @@ const StyledToggle = styled.button`
 `;
 
 const StyledList = styled.ul`
-  position: fixed;
+  position: absolute;
 
   background-color: var(--color-grey-0);
   box-shadow: var(--shadow-md);
@@ -37,12 +38,13 @@ const StyledList = styled.ul`
 
   right: ${(props) => props.position.x}px;
   top: ${(props) => props.position.y}px;
+  z-index: 50;
 `;
 
 StyledList.defaultProps = {
   position: {
-    x: 20,
-    y: 20,
+    x: 35,
+    y: 35,
   },
 };
 
@@ -99,7 +101,7 @@ function List({ children, id }) {
   if (openId !== id) return null;
   return createPortal(
     <StyledList>{children}</StyledList>,
-    document.body
+    document.getElementById(id)
   );
 }
 function Toggle({ id }) {

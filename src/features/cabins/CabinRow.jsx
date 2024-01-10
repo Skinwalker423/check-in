@@ -14,17 +14,13 @@ import ConfirmDelete from "../../ui/ConfirmDelete";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
 
-// const TableRow = styled.div`
-//   display: grid;
-//   grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
-//   column-gap: 2.4rem;
-//   align-items: center;
-//   padding: 1.4rem 2.4rem;
-
-//   &:not(:last-child) {
-//     border-bottom: 1px solid var(--color-grey-100);
-//   }
-// `;
+const StyledActions = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  flex-direction: column;
+`;
 
 const Img = styled.img`
   display: block;
@@ -97,39 +93,44 @@ const CabinRow = ({ cabin }) => {
         ) : (
           <span>&mdash;</span>
         )}
-        <div id={id} style={{ position: "relative" }}>
-          <button
-            onClick={handleCopyCabin}
-            disabled={isDeleting || isCreating}
-          >
-            <HiSquare2Stack />
-          </button>
-          <Modal>
-            <Modal.Open opens={"edit"}>
-              <button disabled={isDeleting || isCreating}>
-                <HiPencil />
-              </button>
-            </Modal.Open>
-            <Modal.Content name={"edit"}>
-              <EditCabinForm cabinToEdit={cabin} />
-            </Modal.Content>
-          </Modal>
+        <StyledActions id={id}>
+          <div>
+            <button
+              onClick={handleCopyCabin}
+              disabled={isDeleting || isCreating}
+            >
+              <HiSquare2Stack />
+            </button>
+            <Modal>
+              <Modal.Open opens={"edit"}>
+                <button disabled={isDeleting || isCreating}>
+                  <HiPencil />
+                </button>
+              </Modal.Open>
+              <Modal.Content name={"edit"}>
+                <EditCabinForm cabinToEdit={cabin} />
+              </Modal.Content>
+            </Modal>
 
-          <Modal>
-            <Modal.Open opens={"delete"}>
-              <button disabled={isDeleting || isCreating}>
-                {isDeleting ? <Spinner /> : <HiMiniTrash />}
-              </button>
-            </Modal.Open>
-            <Modal.Content name={"delete"}>
-              <ConfirmDelete
-                onConfirm={() => deleteCabin(id)}
-                resourceName={name}
-                disabled={isDeleting || isCreating}
-              />
-            </Modal.Content>
-          </Modal>
-
+            <Modal>
+              <Modal.Open opens={"delete"}>
+                <button disabled={isDeleting || isCreating}>
+                  {isDeleting ? (
+                    <Spinner />
+                  ) : (
+                    <HiMiniTrash />
+                  )}
+                </button>
+              </Modal.Open>
+              <Modal.Content name={"delete"}>
+                <ConfirmDelete
+                  onConfirm={() => deleteCabin(id)}
+                  resourceName={name}
+                  disabled={isDeleting || isCreating}
+                />
+              </Modal.Content>
+            </Modal>
+          </div>
           <Menus.Menu>
             <Menus.Toggle id={id} />
             <Menus.List id={id}>
@@ -138,7 +139,7 @@ const CabinRow = ({ cabin }) => {
               <Menus.Button>Delete</Menus.Button>
             </Menus.List>
           </Menus.Menu>
-        </div>
+        </StyledActions>
       </Table.Row>
     </>
   );

@@ -41,8 +41,8 @@ const StyledList = styled.ul`
 
 StyledList.defaultProps = {
   position: {
-    x: 0,
-    y: 0,
+    x: 20,
+    y: 20,
   },
 };
 
@@ -78,9 +78,7 @@ const Menus = ({ children }) => {
 
   const open = setOpenId;
 
-  const close = () => {
-    setOpenId("");
-  };
+  const close = () => setOpenId("");
 
   const values = {
     openId,

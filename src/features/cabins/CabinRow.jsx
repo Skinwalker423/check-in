@@ -3,8 +3,6 @@ import { formatCurrency } from "../../utils/helpers";
 
 import useDeleteCabin from "./useDeleteCabin";
 import useCreateCabin from "./useCreateCabin";
-
-import Spinner from "../../ui/Spinner";
 import EditCabinForm from "./EditCabinForm";
 import { HiPencil } from "react-icons/hi2";
 import { HiSquare2Stack } from "react-icons/hi2";
@@ -94,34 +92,35 @@ const CabinRow = ({ cabin }) => {
           <span>&mdash;</span>
         )}
         <StyledActions id={id}>
-          <div>
-            <button
-              onClick={handleCopyCabin}
-              disabled={isDeleting || isCreating}
-            >
-              <HiSquare2Stack />
-            </button>
-            <Modal>
-              <Modal.Open opens={"edit"}>
-                <button disabled={isDeleting || isCreating}>
-                  <HiPencil />
-                </button>
-              </Modal.Open>
+          <Modal>
+            <Menus.Menu>
+              <Menus.Toggle id={id} />
+              <Menus.List id={id}>
+                <Menus.Button
+                  onClick={handleCopyCabin}
+                  icon={<HiSquare2Stack />}
+                  disabled={isDeleting || isCreating}
+                >
+                  Duplicate
+                </Menus.Button>
+                <Modal.Open opens={"edit"}>
+                  <Menus.Button icon={<HiPencil />}>
+                    Edit
+                  </Menus.Button>
+                </Modal.Open>
+                <Modal.Open opens={"delete"}>
+                  <Menus.Button
+                    disabled={isDeleting || isCreating}
+                    icon={<HiMiniTrash />}
+                  >
+                    Delete
+                  </Menus.Button>
+                </Modal.Open>
+              </Menus.List>
               <Modal.Content name={"edit"}>
                 <EditCabinForm cabinToEdit={cabin} />
               </Modal.Content>
-            </Modal>
 
-            <Modal>
-              <Modal.Open opens={"delete"}>
-                <button disabled={isDeleting || isCreating}>
-                  {isDeleting ? (
-                    <Spinner />
-                  ) : (
-                    <HiMiniTrash />
-                  )}
-                </button>
-              </Modal.Open>
               <Modal.Content name={"delete"}>
                 <ConfirmDelete
                   onConfirm={() => deleteCabin(id)}
@@ -129,25 +128,8 @@ const CabinRow = ({ cabin }) => {
                   disabled={isDeleting || isCreating}
                 />
               </Modal.Content>
-            </Modal>
-          </div>
-          <Menus.Menu>
-            <Menus.Toggle id={id} />
-            <Menus.List id={id}>
-              <Menus.Button
-                onClick={handleCopyCabin}
-                icon={<HiSquare2Stack />}
-              >
-                Duplicate
-              </Menus.Button>
-              <Menus.Button icon={<HiPencil />}>
-                Edit
-              </Menus.Button>
-              <Menus.Button icon={<HiMiniTrash />}>
-                Delete
-              </Menus.Button>
-            </Menus.List>
-          </Menus.Menu>
+            </Menus.Menu>
+          </Modal>
         </StyledActions>
       </Table.Row>
     </>

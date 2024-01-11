@@ -46,11 +46,6 @@ const Discount = styled.div`
   color: var(--color-green-700);
 `;
 
-// const Wrapper = styled.div`
-//   display: flex;
-//   gap: 2rem;
-// `;
-
 const CabinRow = ({ cabin }) => {
   const {
     name,

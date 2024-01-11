@@ -43,8 +43,8 @@ const StyledList = styled.ul`
 
 StyledList.defaultProps = {
   position: {
-    x: 0,
-    y: 40,
+    x: 60,
+    y: 20,
   },
 };
 

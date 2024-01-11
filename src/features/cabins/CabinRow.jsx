@@ -13,7 +13,6 @@ import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
 
 const StyledActions = styled.div`
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: flex-end;

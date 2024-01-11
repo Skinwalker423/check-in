@@ -8,7 +8,6 @@ const Menu = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  position: relative;
 `;
 
 const StyledToggle = styled.button`
@@ -39,13 +38,13 @@ const StyledList = styled.ul`
 
   right: ${(props) => props.position.x}px;
   top: ${(props) => props.position.y}px;
-  z-index: 50;
+  z-index: 99;
 `;
 
 StyledList.defaultProps = {
   position: {
     x: 0,
-    y: 65,
+    y: 40,
   },
 };
 

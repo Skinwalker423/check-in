@@ -8,6 +8,7 @@ const StyledFilter = styled.div`
   padding: 0.4rem;
   display: flex;
   gap: 0.4rem;
+  justify-content: space-around;
 `;
 
 const FilterButton = styled.button`
@@ -37,7 +38,9 @@ const FilterButton = styled.button`
 const Filter = () => {
   return (
     <StyledFilter>
-      <FilterButton>Filter</FilterButton>
+      <FilterButton>All</FilterButton>
+      <FilterButton>No Discount</FilterButton>
+      <FilterButton>Discounts</FilterButton>
     </StyledFilter>
   );
 };

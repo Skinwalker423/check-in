@@ -29,6 +29,52 @@ export default function CabinTable() {
       (cabin) => cabin.discount !== 0
     );
 
+  const sortedValue =
+    searchParams.get("filter") || "name-asc";
+
+  console.log("sorted Value", sortedValue);
+
+  if (sortedValue === "regularPrice-asc") {
+    filteredCabins = filteredCabins.sort(
+      (a, b) => a.regularPrice - b.regularPrice
+    );
+  }
+  if (sortedValue === "regularPrice-desc") {
+    filteredCabins = filteredCabins.sort(
+      (a, b) => b.regularPrice - a.regularPrice
+    );
+  }
+  if (sortedValue === "maxCapacity-asc") {
+    filteredCabins = filteredCabins.sort(
+      (a, b) => a.maxCapacity - b.maxCapacity
+    );
+  }
+  if (sortedValue === "maxCapacity-desc") {
+    filteredCabins = filteredCabins.sort(
+      (a, b) => b.maxCapacity - a.maxCapacity
+    );
+  }
+  if (
+    sortedValue === "name-desc" ||
+    sortedValue === "name-asc"
+  ) {
+    filteredCabins = filteredCabins.sort((a, b) => {
+      const nameA = a.name.toLowerCase();
+      const nameB = b.name.toLowerCase();
+      if (nameA < nameB) {
+        return sortedValue === "name-desc" ? 1 : -1;
+      }
+
+      if (nameA > nameB) {
+        return sortedValue === "name-desc" ? -1 : 1;
+      }
+
+      return 0;
+    });
+  }
+
+  console.log("filtered cabins", filteredCabins);
+
   return (
     <Menus>
       <Table columns={"0.6fr 1.8fr 2.2fr 1fr 1fr 1fr"}>

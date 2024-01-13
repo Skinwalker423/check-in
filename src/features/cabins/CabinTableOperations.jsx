@@ -25,6 +25,10 @@ const CabinTableOperations = () => {
           },
           {
             value: "regularPrice-asc",
+            label: "Sort by price (low first)",
+          },
+          {
+            value: "regularPrice-desc",
             label: "Sort by price (high first)",
           },
           {

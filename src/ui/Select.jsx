@@ -1,4 +1,3 @@
-import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledSelect = styled.select`
@@ -15,19 +14,9 @@ const StyledSelect = styled.select`
   box-shadow: var(--shadow-sm);
 `;
 
-const Select = ({ value, options }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const handleOptionChange = (e) => {
-    console.log(e.target.value);
-    searchParams.set("filter", e.target.value);
-    setSearchParams(searchParams);
-  };
+const Select = ({ value, options, onChange }) => {
   return (
-    <StyledSelect
-      onChange={handleOptionChange}
-      value={value}
-    >
+    <StyledSelect onChange={onChange} value={value}>
       {options.map((option) => {
         return (
           <option value={option.value} key={option.value}>

@@ -61,7 +61,6 @@ const Empty = styled.p`
 const TableContext = createContext();
 
 const Table = ({ columns, children }) => {
-  console.log("col", columns);
   const values = {
     columns,
   };

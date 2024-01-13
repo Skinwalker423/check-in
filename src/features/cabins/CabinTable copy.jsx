@@ -30,9 +30,7 @@ export default function CabinTable() {
     );
 
   const sortedValue =
-    searchParams.get("filter") || "name-asc";
-
-  console.log("sorted Value", sortedValue);
+    searchParams.get("sortby") || "name-asc";
 
   if (sortedValue === "regularPrice-asc") {
     filteredCabins = filteredCabins.sort(
@@ -72,8 +70,6 @@ export default function CabinTable() {
       return 0;
     });
   }
-
-  console.log("filtered cabins", filteredCabins);
 
   return (
     <Menus>

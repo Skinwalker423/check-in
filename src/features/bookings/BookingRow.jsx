@@ -54,6 +54,13 @@ function BookingRow({
     "checked-out": "silver",
   };
 
+  console.log(
+    "booking row",
+    bookingId,
+    created_at,
+    numGuests
+  );
+
   return (
     <Table.Row>
       <Cabin>{cabinName}</Cabin>
@@ -71,12 +78,14 @@ function BookingRow({
           &rarr; {numNights} night stay
         </span>
         <span>
-          {format(new Date(startDate), "MMM dd yyyy")} &mdash;{" "}
-          {format(new Date(endDate), "MMM dd yyyy")}
+          {format(new Date(startDate), "MMM dd yyyy")}{" "}
+          &mdash; {format(new Date(endDate), "MMM dd yyyy")}
         </span>
       </Stacked>
 
-      <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
+      <Tag type={statusToTagName[status]}>
+        {status.replace("-", " ")}
+      </Tag>
 
       <Amount>{formatCurrency(totalPrice)}</Amount>
     </Table.Row>

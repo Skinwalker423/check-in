@@ -8,7 +8,7 @@ export async function getBookings() {
 
   if (error) {
     console.error(error);
-    throw new Error("problem getting cabins");
+    throw new Error("problem getting bookings");
   }
 
   return bookings;

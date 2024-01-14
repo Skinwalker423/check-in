@@ -1,6 +1,19 @@
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
 
+export async function getBookings() {
+  const { data: bookings, error } = await supabase
+    .from("bookings")
+    .select("*");
+
+  if (error) {
+    console.error(error);
+    throw new Error("problem getting cabins");
+  }
+
+  return bookings;
+}
+
 export async function getBooking(id) {
   const { data, error } = await supabase
     .from("bookings")
@@ -87,7 +100,10 @@ export async function updateBooking(id, obj) {
 
 export async function deleteBooking(id) {
   // REMEMBER RLS POLICIES
-  const { data, error } = await supabase.from("bookings").delete().eq("id", id);
+  const { data, error } = await supabase
+    .from("bookings")
+    .delete()
+    .eq("id", id);
 
   if (error) {
     console.error(error);

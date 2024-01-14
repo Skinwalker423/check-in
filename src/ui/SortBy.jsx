@@ -9,11 +9,12 @@ const SortBy = ({ options }) => {
     setSearchParams(searchParams);
   };
 
-  const value = searchParams.get("sortby") || "name-asc";
+  const sortByValue =
+    searchParams.get("sortby") || "name-asc";
   return (
     <Select
       onChange={handleOptionChange}
-      value={value}
+      value={sortByValue}
       options={options}
       type='white'
     />

@@ -17,15 +17,22 @@ const useBookings = () => {
           method: "eq",
         };
 
+  const sortValue =
+    searchParams.get("sortBy") || "startDate-desc";
+  const [field, direction] = sortValue.split("-");
+
+  const sortBy = { field, direction };
+
   const {
     data: bookings,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["bookings", filter],
+    queryKey: ["bookings", filter, sortBy],
     queryFn: () =>
       getBookings({
         filter,
+        sortBy,
       }),
   });
 

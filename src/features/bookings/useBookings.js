@@ -18,7 +18,7 @@ const useBookings = () => {
         };
 
   const sortValue =
-    searchParams.get("sortBy") || "startDate-desc";
+    searchParams.get("sortby") || "startDate-desc";
   const [field, direction] = sortValue.split("-");
 
   const sortBy = { field, direction };

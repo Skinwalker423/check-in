@@ -23,16 +23,21 @@ const useBookings = () => {
 
   const sortBy = { field, direction };
 
+  const pageValue = parseInt(searchParams.get("page"));
+
+  const page = pageValue ? pageValue : 1;
+
   const {
-    data: { bookings, count },
+    data: { bookings, count } = {},
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["bookings", filter, sortBy],
+    queryKey: ["bookings", filter, sortBy, page],
     queryFn: () =>
       getBookings({
         filter,
         sortBy,
+        page,
       }),
   });
 

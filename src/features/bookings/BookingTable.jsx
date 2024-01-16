@@ -13,7 +13,7 @@ function BookingTable() {
 
   if (isLoading) return <Spinner />;
   if (error) return <ErrorFallback error={error} />;
-  if (!bookings.length)
+  if (!bookings?.length)
     return <Empty resource={"bookings"} />;
 
   console.log("bookings", bookings, count);

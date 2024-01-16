@@ -5,6 +5,7 @@ import Empty from "../../ui/Empty";
 import useBookings from "./useBookings";
 import ErrorFallback from "../../ui/ErrorFallback";
 import Spinner from "../../ui/Spinner";
+import Pagination from "../../ui/Pagination";
 
 function BookingTable() {
   const { bookings, isLoading, error } = useBookings();
@@ -37,6 +38,9 @@ function BookingTable() {
             />
           )}
         />
+        <Table.Footer>
+          <Pagination />
+        </Table.Footer>
       </Table>
     </Menus>
   );

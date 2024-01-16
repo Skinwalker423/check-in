@@ -5,7 +5,10 @@ export async function getBookings({ filter, sortBy }) {
   let query = supabase
     .from("bookings")
     .select(
-      "id, created_at, startDate,endDate,numNights,numGuests,totalPrice,status, cabins(name), guests(fullName, email)"
+      "id, created_at, startDate,endDate,numNights,numGuests,totalPrice,status, cabins(name), guests(fullName, email)",
+      {
+        count: "exact",
+      }
     );
 
   if (filter) {
@@ -22,14 +25,14 @@ export async function getBookings({ filter, sortBy }) {
     });
   }
 
-  const { data: bookings, error } = await query;
+  const { data: bookings, error, count } = await query;
 
   if (error) {
     console.error(error);
     throw new Error("problem getting bookings");
   }
 
-  return bookings;
+  return { bookings, count };
 }
 
 export async function getBooking(id) {

@@ -8,14 +8,15 @@ import Spinner from "../../ui/Spinner";
 import Pagination from "../../ui/Pagination";
 
 function BookingTable() {
-  const { bookings, isLoading, error } = useBookings();
+  const { bookings, isLoading, error, count } =
+    useBookings();
 
   if (isLoading) return <Spinner />;
   if (error) return <ErrorFallback error={error} />;
   if (!bookings.length)
     return <Empty resource={"bookings"} />;
 
-  console.log("bookings", bookings);
+  console.log("bookings", bookings, count);
 
   return (
     <Menus>
@@ -39,7 +40,7 @@ function BookingTable() {
           )}
         />
         <Table.Footer>
-          <Pagination count={bookings?.length} />
+          <Pagination count={count} />
         </Table.Footer>
       </Table>
     </Menus>

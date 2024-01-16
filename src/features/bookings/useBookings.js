@@ -24,7 +24,7 @@ const useBookings = () => {
   const sortBy = { field, direction };
 
   const {
-    data: bookings,
+    data: { bookings, count },
     isLoading,
     error,
   } = useQuery({
@@ -36,7 +36,7 @@ const useBookings = () => {
       }),
   });
 
-  return { bookings, isLoading, error };
+  return { bookings, isLoading, error, count };
 };
 
 export default useBookings;

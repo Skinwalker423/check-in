@@ -1,10 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
+import {
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 import { getBookings } from "../../services/apiBookings";
 import { useSearchParams } from "react-router-dom";
 
 const useBookings = () => {
   const [searchParams] = useSearchParams();
+  const queryClient = useQueryClient();
 
   const filterValue = searchParams.get("status");
 
@@ -38,6 +42,16 @@ const useBookings = () => {
         filter,
         sortBy,
         page,
+      }),
+  });
+
+  queryClient.prefetchQuery({
+    queryKey: ["bookings", filter, sortBy, page + 1],
+    queryFn: () =>
+      getBookings({
+        filter,
+        sortBy,
+        page: page + 1,
       }),
   });
 

@@ -92,10 +92,6 @@ const Pagination = ({ count = 0 }) => {
   const pageCount = Math.ceil(count / RESULTS_PER_PAGE);
 
   const prefetchNext = () => {
-    console.log("current page", currentPage);
-    console.log("filter", filter);
-    console.log("sortBy", sortBy);
-
     if (currentPage < pageCount && currentPage > 0) {
       queryClient.prefetchQuery({
         queryKey: [
@@ -109,6 +105,24 @@ const Pagination = ({ count = 0 }) => {
             filter,
             sortBy,
             page: currentPage + 1,
+          }),
+      });
+    }
+  };
+  const prefetchPrevious = () => {
+    if (currentPage <= pageCount && currentPage > 1) {
+      queryClient.prefetchQuery({
+        queryKey: [
+          "bookings",
+          filter,
+          sortBy,
+          currentPage - 1,
+        ],
+        queryFn: () =>
+          getBookings({
+            filter,
+            sortBy,
+            page: currentPage - 1,
           }),
       });
     }
@@ -143,6 +157,8 @@ const Pagination = ({ count = 0 }) => {
         <PaginationButton
           disabled={currentPage - 1 < 1}
           onClick={handlePrevious}
+          onMouseEnter={prefetchPrevious}
+          onFocus={prefetchPrevious}
         >
           <HiChevronLeft /> Prev
         </PaginationButton>

@@ -1,5 +1,6 @@
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
+import { RESULTS_PER_PAGE } from "../utils/constants";
 
 export async function getBookings({
   filter,
@@ -31,6 +32,10 @@ export async function getBookings({
 
   if (page) {
     console.log("page", page);
+    const from = page * RESULTS_PER_PAGE - RESULTS_PER_PAGE;
+    const to = page * RESULTS_PER_PAGE - 1;
+
+    query = query.range(from, to);
   }
 
   const { data: bookings, error, count } = await query;

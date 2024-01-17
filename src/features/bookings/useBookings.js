@@ -6,6 +6,8 @@ import {
 import { getBookings } from "../../services/apiBookings";
 import { useSearchParams } from "react-router-dom";
 
+import { RESULTS_PER_PAGE } from "../../utils/constants";
+
 const useBookings = () => {
   const [searchParams] = useSearchParams();
   const queryClient = useQueryClient();
@@ -45,15 +47,19 @@ const useBookings = () => {
       }),
   });
 
-  queryClient.prefetchQuery({
-    queryKey: ["bookings", filter, sortBy, page + 1],
-    queryFn: () =>
-      getBookings({
-        filter,
-        sortBy,
-        page: page + 1,
-      }),
-  });
+  const totalPages = Math.ceil(count / RESULTS_PER_PAGE);
+
+  if (page < totalPages) {
+    queryClient.prefetchQuery({
+      queryKey: ["bookings", filter, sortBy, page + 1],
+      queryFn: () =>
+        getBookings({
+          filter,
+          sortBy,
+          page: page + 1,
+        }),
+    });
+  }
 
   return { bookings, isLoading, error, count };
 };

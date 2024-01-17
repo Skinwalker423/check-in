@@ -24,19 +24,14 @@ export async function getBookings({
   }
 
   if (sortBy.field) {
-    console.log("direction", sortBy.direction);
     query = query.order(sortBy.field, {
       ascending: sortBy.direction === "asc" ? true : false,
     });
   }
 
   if (page) {
-    console.log("page", page);
     const from = page * RESULTS_PER_PAGE - RESULTS_PER_PAGE;
     const to = page * RESULTS_PER_PAGE - 1;
-
-    console.log("from", from);
-    console.log("to", to);
 
     query = query.range(from, to);
   }

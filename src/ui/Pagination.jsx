@@ -106,6 +106,7 @@ const Pagination = ({ count = 0 }) => {
             sortBy,
             page: currentPage + 1,
           }),
+        staleTime: 60000,
       });
     }
   };
@@ -124,6 +125,7 @@ const Pagination = ({ count = 0 }) => {
             sortBy,
             page: currentPage - 1,
           }),
+        staleTime: 60000,
       });
     }
   };

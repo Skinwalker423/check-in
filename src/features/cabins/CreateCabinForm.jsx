@@ -22,7 +22,6 @@ function CreateCabinForm({ onClose }) {
   const { createCabin, isCreating } = useCreateCabin();
 
   const onSubmit = (data) => {
-    console.log("data", data);
     createCabin(
       {
         ...data,
@@ -108,11 +107,7 @@ function CreateCabinForm({ onClose }) {
           {...register("discount", {
             validate: (value) => {
               const regPrice = getValues("regularPrice");
-              console.log("reg price", regPrice);
-              console.log(
-                "value",
-                parseInt(value) < parseInt(regPrice)
-              );
+
               return (
                 parseInt(value) <= parseInt(regPrice) ||
                 "Discount greater than the price"

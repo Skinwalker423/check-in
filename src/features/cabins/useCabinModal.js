@@ -11,7 +11,6 @@ const useCabinModal = () => {
         modalRef.current &&
         !modalRef.current.contains(e?.target)
       ) {
-        console.log(openName);
         onClose();
       }
     };

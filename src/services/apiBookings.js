@@ -35,6 +35,9 @@ export async function getBookings({
     const from = page * RESULTS_PER_PAGE - RESULTS_PER_PAGE;
     const to = page * RESULTS_PER_PAGE - 1;
 
+    console.log("from", from);
+    console.log("to", to);
+
     query = query.range(from, to);
   }
 

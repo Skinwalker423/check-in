@@ -5,6 +5,8 @@ import {
 } from "react-icons/hi2";
 import { useSearchParams } from "react-router-dom";
 import { RESULTS_PER_PAGE } from "../utils/constants";
+import { useQueryClient } from "@tanstack/react-query";
+import { getBookings } from "../services/apiBookings";
 
 const StyledPagination = styled.div`
   width: 100%;
@@ -67,12 +69,50 @@ const PaginationButton = styled.button`
 
 const Pagination = ({ count = 0 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const queryClient = useQueryClient();
 
   const page = parseInt(searchParams.get("page"));
+  const filterValue = searchParams.get("status");
+  const filter =
+    !filterValue || filterValue === "all"
+      ? null
+      : {
+          field: "status",
+          value: filterValue,
+          method: "eq",
+        };
+  const sortValue =
+    searchParams.get("sortby") || "startDate-desc";
+  const [field, direction] = sortValue.split("-");
+
+  const sortBy = { field, direction };
 
   const currentPage = page ? page : 1;
 
   const pageCount = Math.ceil(count / RESULTS_PER_PAGE);
+
+  const prefetchNext = () => {
+    console.log("current page", currentPage);
+    console.log("filter", filter);
+    console.log("sortBy", sortBy);
+
+    if (currentPage < pageCount && currentPage > 0) {
+      queryClient.prefetchQuery({
+        queryKey: [
+          "bookings",
+          filter,
+          sortBy,
+          currentPage + 1,
+        ],
+        queryFn: () =>
+          getBookings({
+            filter,
+            sortBy,
+            page: currentPage + 1,
+          }),
+      });
+    }
+  };
 
   function handlePrevious() {
     if (currentPage - 1 < 1) return;
@@ -109,6 +149,8 @@ const Pagination = ({ count = 0 }) => {
         <PaginationButton
           disabled={currentPage + 1 > pageCount}
           onClick={handleNext}
+          onMouseEnter={prefetchNext}
+          onFocus={prefetchNext}
         >
           Next
           <HiChevronRight />

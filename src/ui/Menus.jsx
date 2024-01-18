@@ -102,9 +102,12 @@ function List({ children, id }) {
   });
 
   if (openId !== id) return null;
+  const el =
+    document.getElementById(`${id}`) ||
+    document.getElementById("root");
   return createPortal(
     <StyledList ref={ref}>{children}</StyledList>,
-    document.getElementById(id)
+    el
   );
 }
 function Toggle({ id }) {

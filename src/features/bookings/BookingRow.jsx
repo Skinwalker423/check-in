@@ -6,6 +6,7 @@ import Table from "../../ui/Table";
 
 import { formatCurrency } from "../../utils/helpers";
 import { formatDistanceFromNow } from "../../utils/helpers";
+import Menus from "../../ui/Menus";
 
 const Cabin = styled.div`
   font-size: 1.6rem;
@@ -44,7 +45,6 @@ function BookingRow({
     numGuests,
     totalPrice,
     status,
-
     guests,
     cabins,
   },
@@ -59,10 +59,12 @@ function BookingRow({
     "booking row",
     guests,
     cabins,
-    bookingId,
+
     created_at,
     numGuests
   );
+
+  console.log("booking id", bookingId);
 
   return (
     <Table.Row>
@@ -89,8 +91,15 @@ function BookingRow({
       <Tag type={statusToTagName[status]}>
         {status.replace("-", " ")}
       </Tag>
-
       <Amount>{formatCurrency(totalPrice)}</Amount>
+      <div id={bookingId}>
+        <Menus.Menu>
+          <Menus.Toggle id={bookingId} />
+          <Menus.List id={bookingId}>
+            <Menus.Button>Duplicate</Menus.Button>
+          </Menus.List>
+        </Menus.Menu>
+      </div>
     </Table.Row>
   );
 }

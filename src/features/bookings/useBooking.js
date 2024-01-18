@@ -9,11 +9,12 @@ const useBooking = () => {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["booking"],
+    queryKey: ["booking", bookingId],
     queryFn: () => getBooking(bookingId),
+    retry: false,
   });
 
-  return { booking, isLoading, error, bookingId };
+  return { booking, isLoading, error };
 };
 
 export default useBooking;

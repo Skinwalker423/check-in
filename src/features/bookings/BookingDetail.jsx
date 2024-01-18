@@ -11,7 +11,6 @@ import Spinner from "../../ui/Spinner";
 import ErrorFallback from "../../ui/ErrorFallback";
 
 import { useMoveBack } from "../../hooks/useMoveBack";
-
 import useBooking from "./useBooking";
 
 const HeadingGroup = styled.div`
@@ -23,8 +22,7 @@ const HeadingGroup = styled.div`
 function BookingDetail() {
   const moveBack = useMoveBack();
 
-  const { booking, error, isLoading, bookingId } =
-    useBooking();
+  const { booking, error, isLoading } = useBooking();
 
   if (isLoading) return <Spinner />;
   if (error) return <ErrorFallback error={error} />;
@@ -41,7 +39,7 @@ function BookingDetail() {
     <>
       <Row type='horizontal'>
         <HeadingGroup>
-          <Heading as='h1'>Booking {bookingId}</Heading>
+          <Heading as='h1'>Booking {booking.id}</Heading>
           <Tag type={statusToTagName[status]}>
             {status.replace("-", " ")}
           </Tag>

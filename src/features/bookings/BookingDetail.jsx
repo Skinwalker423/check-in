@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
 
 import BookingDataBox from "./BookingDataBox";
 import Row from "../../ui/Row";
@@ -8,12 +7,12 @@ import Tag from "../../ui/Tag";
 import ButtonGroup from "../../ui/ButtonGroup";
 import Button from "../../ui/Button";
 import ButtonText from "../../ui/ButtonText";
-
-import { useMoveBack } from "../../hooks/useMoveBack";
-import { useQuery } from "@tanstack/react-query";
-import { getBooking } from "../../services/apiBookings";
 import Spinner from "../../ui/Spinner";
 import ErrorFallback from "../../ui/ErrorFallback";
+
+import { useMoveBack } from "../../hooks/useMoveBack";
+
+import useBooking from "./useBooking";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -22,21 +21,15 @@ const HeadingGroup = styled.div`
 `;
 
 function BookingDetail() {
-  const { bookingId } = useParams();
   const moveBack = useMoveBack();
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["booking"],
-    queryFn: () => getBooking(bookingId),
-  });
+  const { booking, error, isLoading, bookingId } =
+    useBooking();
 
   if (isLoading) return <Spinner />;
   if (error) return <ErrorFallback error={error} />;
 
-  const booking = data;
-  const status = data.status;
-
-  console.log("status", status);
+  const status = booking.status;
 
   const statusToTagName = {
     unconfirmed: "blue",
@@ -48,7 +41,7 @@ function BookingDetail() {
     <>
       <Row type='horizontal'>
         <HeadingGroup>
-          <Heading as='h1'>Booking #X</Heading>
+          <Heading as='h1'>Booking {bookingId}</Heading>
           <Tag type={statusToTagName[status]}>
             {status.replace("-", " ")}
           </Tag>

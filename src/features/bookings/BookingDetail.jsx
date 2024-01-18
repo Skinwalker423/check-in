@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
 
 import BookingDataBox from "./BookingDataBox";
 import Row from "../../ui/Row";
@@ -9,6 +10,10 @@ import Button from "../../ui/Button";
 import ButtonText from "../../ui/ButtonText";
 
 import { useMoveBack } from "../../hooks/useMoveBack";
+import { useQuery } from "@tanstack/react-query";
+import { getBooking } from "../../services/apiBookings";
+import Spinner from "../../ui/Spinner";
+import ErrorFallback from "../../ui/ErrorFallback";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -17,10 +22,21 @@ const HeadingGroup = styled.div`
 `;
 
 function BookingDetail() {
-  const booking = {};
-  const status = "checked-in";
-
+  const { bookingId } = useParams();
   const moveBack = useMoveBack();
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["booking"],
+    queryFn: () => getBooking(bookingId),
+  });
+
+  if (isLoading) return <Spinner />;
+  if (error) return <ErrorFallback error={error} />;
+
+  const booking = data;
+  const status = data.status;
+
+  console.log("status", status);
 
   const statusToTagName = {
     unconfirmed: "blue",
@@ -30,18 +46,22 @@ function BookingDetail() {
 
   return (
     <>
-      <Row type="horizontal">
+      <Row type='horizontal'>
         <HeadingGroup>
-          <Heading as="h1">Booking #X</Heading>
-          <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
+          <Heading as='h1'>Booking #X</Heading>
+          <Tag type={statusToTagName[status]}>
+            {status.replace("-", " ")}
+          </Tag>
         </HeadingGroup>
-        <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
+        <ButtonText onClick={moveBack}>
+          &larr; Back
+        </ButtonText>
       </Row>
 
       <BookingDataBox booking={booking} />
 
       <ButtonGroup>
-        <Button variation="secondary" onClick={moveBack}>
+        <Button variation='secondary' onClick={moveBack}>
           Back
         </Button>
       </ButtonGroup>

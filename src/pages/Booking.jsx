@@ -1,8 +1,11 @@
-import { useParams } from "react-router-dom";
+import BookingDetail from "../features/bookings/BookingDetail";
 
 const Booking = () => {
-  const { bookingId } = useParams();
-  return <div>Booking test {bookingId} </div>;
+  return (
+    <>
+      <BookingDetail />
+    </>
+  );
 };
 
 export default Booking;

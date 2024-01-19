@@ -38,6 +38,15 @@ const variations = {
       background-color: var(--color-grey-50);
     }
   `,
+  disabled: css`
+    color: var(--color-grey-600);
+    background: var(--color-grey-200);
+    border: 1px solid var(--color-grey-200);
+
+    &:hover {
+      background-color: var(--color-grey-200);
+    }
+  `,
   danger: css`
     color: var(--color-red-100);
     background-color: var(--color-red-700);
@@ -56,6 +65,7 @@ const Button = styled.button`
   ${(props) => props.size && sizes[props.size]}
   ${(props) =>
     props.variation && variations[props.variation]}
+  ${(props) => props.disabled && variations["disabled"]}
 `;
 
 Button.defaultProps = {

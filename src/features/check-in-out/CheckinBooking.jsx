@@ -31,7 +31,7 @@ function CheckinBooking() {
     if (booking?.isPaid) {
       setConfirmPaid(true);
     }
-  }, [booking?.isPaid]);
+  }, [booking]);
 
   if (isLoading) return <Spinner />;
   if (error) return <ErrorFallback error={error} />;
@@ -73,13 +73,17 @@ function CheckinBooking() {
         <Checkbox
           checked={confirmPaid}
           onChange={() => setConfirmPaid((bool) => !bool)}
+          disabled={booking?.isPaid}
         >
           I confirm that {guests?.fullName} has paid the
           full amount
         </Checkbox>
       </Box>
       <ButtonGroup>
-        <Button onClick={handleCheckin}>
+        <Button
+          onClick={handleCheckin}
+          disabled={!confirmPaid}
+        >
           Check in booking #{bookingId}
         </Button>
         <Button variation='secondary' onClick={moveBack}>

@@ -49,18 +49,15 @@ function CheckinBooking() {
 
   console.log(
     "checkin booking",
-    guests,
+
     totalPrice,
     numGuests,
     hasBreakfast,
-    numNights,
-    booking
+    numNights
   );
 
   function handleCheckin() {
-    console.log("booking id", bookingId);
-    const obj = { isPaid: true, status: "checked-in" };
-    updateBooking({ id: bookingId, obj });
+    updateBooking(bookingId);
   }
 
   return (

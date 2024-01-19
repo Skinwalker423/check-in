@@ -5,20 +5,29 @@ import {
 import toast from "react-hot-toast";
 
 import { updateBooking as updateBookingApi } from "../../services/apiBookings";
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const useUpdateBooking = () => {
   const queryClient = useQueryClient();
-  const { bookingId } = useParams();
+  const navigate = useNavigate();
 
   const { isLoading: isUpdating, mutate: updateBooking } =
     useMutation({
-      mutationFn: updateBookingApi,
-      onSuccess: () => {
-        toast.success("successfully updated booking");
-        queryClient.invalidateQueries({
-          queryKey: ["booking", bookingId],
+      mutationFn: (bookingId) => {
+        return updateBookingApi(bookingId, {
+          isPaid: true,
+          status: "checked-in",
         });
+      },
+      onSuccess: (data) => {
+        toast.success(
+          `successfully updated booking #${data?.id}`
+        );
+        queryClient.invalidateQueries({
+          active: true,
+        });
+
+        navigate("/");
       },
       onError: (err) => {
         toast.error(err.message, {

@@ -10,7 +10,10 @@ import {
 import DataItem from "../../ui/DataItem";
 import { Flag } from "../../ui/Flag";
 
-import { formatDistanceFromNow, formatCurrency } from "../../utils/helpers";
+import {
+  formatDistanceFromNow,
+  formatCurrency,
+} from "../../utils/helpers";
 
 const StyledBookingDataBox = styled.section`
   /* Box */
@@ -77,9 +80,13 @@ const Price = styled.div`
   margin-top: 2.4rem;
 
   background-color: ${(props) =>
-    props.isPaid ? "var(--color-green-100)" : "var(--color-yellow-100)"};
+    props.isPaid
+      ? "var(--color-green-100)"
+      : "var(--color-yellow-100)"};
   color: ${(props) =>
-    props.isPaid ? "var(--color-green-700)" : "var(--color-yellow-700)"};
+    props.isPaid
+      ? "var(--color-green-700)"
+      : "var(--color-yellow-700)"};
 
   & p:last-child {
     text-transform: uppercase;
@@ -110,12 +117,18 @@ function BookingDataBox({ booking }) {
     numNights,
     numGuests,
     cabinPrice,
-    extrasPrice,
+    extraPrice,
     totalPrice,
     hasBreakfast,
     observations,
     isPaid,
-    guests: { fullName: guestName, email, country, countryFlag, nationalID },
+    guests: {
+      fullName: guestName,
+      email,
+      country,
+      countryFlag,
+      nationalID,
+    },
     cabins: { name: cabinName },
   } = booking;
 
@@ -125,24 +138,35 @@ function BookingDataBox({ booking }) {
         <div>
           <HiOutlineHomeModern />
           <p>
-            {numNights} nights in Cabin <span>{cabinName}</span>
+            {numNights} nights in Cabin{" "}
+            <span>{cabinName}</span>
           </p>
         </div>
 
         <p>
-          {format(new Date(startDate), "EEE, MMM dd yyyy")} (
+          {format(new Date(startDate), "EEE, MMM dd yyyy")}{" "}
+          (
           {isToday(new Date(startDate))
             ? "Today"
             : formatDistanceFromNow(startDate)}
-          ) &mdash; {format(new Date(endDate), "EEE, MMM dd yyyy")}
+          ) &mdash;{" "}
+          {format(new Date(endDate), "EEE, MMM dd yyyy")}
         </p>
       </Header>
 
       <Section>
         <Guest>
-          {countryFlag && <Flag src={countryFlag} alt={`Flag of ${country}`} />}
+          {countryFlag && (
+            <Flag
+              src={countryFlag}
+              alt={`Flag of ${country}`}
+            />
+          )}
           <p>
-            {guestName} {numGuests > 1 ? `+ ${numGuests - 1} guests` : ""}
+            {guestName}{" "}
+            {numGuests > 1
+              ? `+ ${numGuests - 1} guests`
+              : ""}
           </p>
           <span>&bull;</span>
           <p>{email}</p>
@@ -153,23 +177,31 @@ function BookingDataBox({ booking }) {
         {observations && (
           <DataItem
             icon={<HiOutlineChatBubbleBottomCenterText />}
-            label="Observations"
+            label='Observations'
           >
             {observations}
           </DataItem>
         )}
 
-        <DataItem icon={<HiOutlineCheckCircle />} label="Breakfast included?">
+        <DataItem
+          icon={<HiOutlineCheckCircle />}
+          label='Breakfast included?'
+        >
           {hasBreakfast ? "Yes" : "No"}
         </DataItem>
 
         <Price isPaid={isPaid}>
-          <DataItem icon={<HiOutlineCurrencyDollar />} label={`Total price`}>
+          <DataItem
+            icon={<HiOutlineCurrencyDollar />}
+            label={`Total price`}
+          >
             {formatCurrency(totalPrice)}
 
             {hasBreakfast &&
-              ` (${formatCurrency(cabinPrice)} cabin + ${formatCurrency(
-                extrasPrice
+              ` (${formatCurrency(
+                cabinPrice
+              )} cabin + ${formatCurrency(
+                extraPrice
               )} breakfast)`}
           </DataItem>
 
@@ -178,7 +210,13 @@ function BookingDataBox({ booking }) {
       </Section>
 
       <Footer>
-        <p>Booked {format(new Date(created_at), "EEE, MMM dd yyyy, p")}</p>
+        <p>
+          Booked{" "}
+          {format(
+            new Date(created_at),
+            "EEE, MMM dd yyyy, p"
+          )}
+        </p>
       </Footer>
     </StyledBookingDataBox>
   );

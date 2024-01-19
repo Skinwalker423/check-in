@@ -6,8 +6,11 @@ import Heading from "../../ui/Heading";
 import ButtonGroup from "../../ui/ButtonGroup";
 import Button from "../../ui/Button";
 import ButtonText from "../../ui/ButtonText";
+import Spinner from "../../ui/Spinner";
+import ErrorFallback from "../../ui/ErrorFallback";
 
 import { useMoveBack } from "../../hooks/useMoveBack";
+import useBooking from "../bookings/useBooking";
 
 // const Box = styled.div`
 //   /* Box */
@@ -20,7 +23,10 @@ import { useMoveBack } from "../../hooks/useMoveBack";
 function CheckinBooking() {
   const moveBack = useMoveBack();
 
-  const booking = {};
+  const { booking, error, isLoading } = useBooking();
+
+  if (isLoading) return <Spinner />;
+  if (error) return <ErrorFallback error={error} />;
 
   const {
     id: bookingId,
@@ -37,7 +43,8 @@ function CheckinBooking() {
     totalPrice,
     numGuests,
     hasBreakfast,
-    numNights
+    numNights,
+    booking
   );
 
   function handleCheckin() {}

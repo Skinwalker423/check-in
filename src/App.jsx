@@ -9,6 +9,7 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "react-hot-toast";
 
 import Dashboard from "./pages/Dashboard";
 import Bookings from "./pages/Bookings";
@@ -19,10 +20,11 @@ import PageNotFound from "./pages/PageNotFound";
 import Settings from "./pages/Settings";
 import NewUsers from "./pages/Users";
 import GlobalStyles from "./styles/GlobalStyles";
-import AppLayout from "./ui/AppLayout";
-import { Toaster } from "react-hot-toast";
 import CounterPage from "./pages/Counter";
 import Booking from "./pages/Booking";
+import CheckIn from "./pages/CheckIn";
+
+import AppLayout from "./ui/AppLayout";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -55,6 +57,10 @@ function App() {
             <Route
               path='bookings/:bookingId'
               element={<Booking />}
+            />
+            <Route
+              path='checkin/:bookingId'
+              element={<CheckIn />}
             />
 
             <Route path='account' element={<Account />} />

@@ -12,6 +12,8 @@ import ErrorFallback from "../../ui/ErrorFallback";
 
 import { useMoveBack } from "../../hooks/useMoveBack";
 import useBooking from "./useBooking";
+import { useNavigate } from "react-router-dom";
+import { HiArrowDownOnSquare } from "react-icons/hi2";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -23,6 +25,7 @@ function BookingDetail() {
   const moveBack = useMoveBack();
 
   const { booking, error, isLoading } = useBooking();
+  const navigate = useNavigate();
 
   if (isLoading) return <Spinner />;
   if (error) return <ErrorFallback error={error} />;
@@ -54,6 +57,11 @@ function BookingDetail() {
       <ButtonGroup>
         <Button variation='secondary' onClick={moveBack}>
           Back
+        </Button>
+        <Button
+          onClick={() => navigate(`/checkin/${booking.id}`)}
+        >
+          <HiArrowDownOnSquare /> Check in
         </Button>
       </ButtonGroup>
     </>

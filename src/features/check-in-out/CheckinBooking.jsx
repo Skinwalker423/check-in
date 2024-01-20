@@ -25,6 +25,7 @@ const Box = styled.div`
 
 function CheckinBooking() {
   const [confirmPaid, setConfirmPaid] = useState(false);
+  const [addBreakfast, setAddBreakfast] = useState(false);
   const { booking, error, isLoading } = useBooking();
   const { isUpdating, updateBooking } = useUpdateBooking();
   const moveBack = useMoveBack();
@@ -32,6 +33,10 @@ function CheckinBooking() {
   useEffect(() => {
     if (booking?.isPaid) {
       setConfirmPaid(true);
+    }
+
+    if (booking?.hasBreakfast) {
+      setAddBreakfast(true);
     }
   }, [booking]);
 
@@ -74,9 +79,22 @@ function CheckinBooking() {
       <BookingDataBox booking={booking} />
       <Box>
         <Checkbox
+          id={"breakfast"}
+          checked={addBreakfast}
+          onChange={() => {
+            setAddBreakfast((bool) => !bool);
+            setConfirmPaid(false);
+          }}
+          disabled={booking?.hasBreakfast}
+        >
+          Want to add breakfast for {guests?.fullName}?
+        </Checkbox>
+      </Box>
+      <Box>
+        <Checkbox
           checked={confirmPaid}
           onChange={() => setConfirmPaid((bool) => !bool)}
-          disabled={booking?.isPaid}
+          disabled={confirmPaid}
         >
           I confirm that {guests?.fullName} has paid the
           full amount

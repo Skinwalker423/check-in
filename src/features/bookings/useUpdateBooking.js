@@ -13,8 +13,12 @@ const useUpdateBooking = () => {
 
   const { isLoading: isUpdating, mutate: updateBooking } =
     useMutation({
-      mutationFn: (bookingId) => {
+      mutationFn: ({
+        bookingId,
+        breakfastOptions = {},
+      }) => {
         return updateBookingApi(bookingId, {
+          ...breakfastOptions,
           isPaid: true,
           status: "checked-in",
         });

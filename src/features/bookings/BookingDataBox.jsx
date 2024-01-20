@@ -197,12 +197,12 @@ function BookingDataBox({ booking }) {
           >
             {formatCurrency(totalPrice)}
 
-            {hasBreakfast &&
+            {extraPrice &&
               ` (${formatCurrency(
                 cabinPrice
               )} cabin + ${formatCurrency(
                 extraPrice
-              )} breakfast)`}
+              )} extras)`}
           </DataItem>
 
           <p>{isPaid ? "Paid" : "Will pay at property"}</p>

@@ -72,12 +72,26 @@ function CheckinBooking() {
   const totalBreakfastPrice =
     settings?.breakfastPrice * numNights * numGuests;
 
-  const totalAdjustedPrice = addBreakfast
-    ? totalPrice + totalBreakfastPrice
-    : totalPrice;
+  const totalAdjustedPrice =
+    addBreakfast && !booking.hasBreakfast
+      ? totalPrice + totalBreakfastPrice
+      : totalPrice;
 
   function handleCheckin() {
-    updateBooking(bookingId);
+    if (!confirmPaid) return;
+
+    const breakfastOptions =
+      addBreakfast && !booking.hasBreakfast
+        ? {
+            totalPrice: totalAdjustedPrice,
+            hasBreakfast: true,
+            extraPrice: booking?.extraPrice
+              ? booking.extraPrice + totalBreakfastPrice
+              : totalBreakfastPrice,
+          }
+        : {};
+
+    updateBooking({ bookingId, breakfastOptions });
   }
 
   return (
@@ -119,6 +133,7 @@ function CheckinBooking() {
           full amount of{" "}
           {formatCurrency(totalAdjustedPrice)}
           {addBreakfast &&
+            !booking.hasBreakfast &&
             `(${formatCurrency(
               totalPrice
             )} + ${formatCurrency(totalBreakfastPrice)})`}

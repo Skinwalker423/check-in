@@ -60,15 +60,6 @@ function CheckinBooking() {
     numNights,
   } = booking;
 
-  console.log(
-    "checkin booking",
-
-    totalPrice,
-    numGuests,
-    hasBreakfast,
-    numNights
-  );
-
   const totalBreakfastPrice =
     settings?.breakfastPrice * numNights * numGuests;
 
@@ -81,7 +72,7 @@ function CheckinBooking() {
     if (!confirmPaid) return;
 
     const breakfastOptions =
-      addBreakfast && !booking.hasBreakfast
+      addBreakfast && !hasBreakfast
         ? {
             totalPrice: totalAdjustedPrice,
             hasBreakfast: true,
@@ -133,7 +124,7 @@ function CheckinBooking() {
           full amount of{" "}
           {formatCurrency(totalAdjustedPrice)}
           {addBreakfast &&
-            !booking.hasBreakfast &&
+            !hasBreakfast &&
             `(${formatCurrency(
               totalPrice
             )} + ${formatCurrency(totalBreakfastPrice)})`}

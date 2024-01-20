@@ -59,6 +59,7 @@ function BookingDetail() {
           Back
         </Button>
         <Button
+          disabled={status !== "unconfirmed"}
           onClick={() => navigate(`/checkin/${booking.id}`)}
         >
           <HiArrowDownOnSquare /> Check in

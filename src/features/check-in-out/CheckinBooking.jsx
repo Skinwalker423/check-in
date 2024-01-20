@@ -14,6 +14,7 @@ import useBooking from "../bookings/useBooking";
 import { useEffect, useState } from "react";
 import Checkbox from "../../ui/Checkbox";
 import useUpdateBooking from "../bookings/useUpdateBooking";
+import { useSettings } from "../settings/useSettings";
 
 const Box = styled.div`
   /* Box */
@@ -28,6 +29,11 @@ function CheckinBooking() {
   const [addBreakfast, setAddBreakfast] = useState(false);
   const { booking, error, isLoading } = useBooking();
   const { isUpdating, updateBooking } = useUpdateBooking();
+  const {
+    settings,
+    isLoading: isLoadingSettings,
+    error: settingsError,
+  } = useSettings();
   const moveBack = useMoveBack();
 
   useEffect(() => {
@@ -40,8 +46,9 @@ function CheckinBooking() {
     }
   }, [booking]);
 
-  if (isLoading) return <Spinner />;
-  if (error) return <ErrorFallback error={error} />;
+  if (isLoading || isLoadingSettings) return <Spinner />;
+  if (error || settingsError)
+    return <ErrorFallback error={error} />;
 
   const {
     id: bookingId,
@@ -87,7 +94,8 @@ function CheckinBooking() {
           }}
           disabled={booking?.hasBreakfast}
         >
-          Want to add breakfast for {guests?.fullName}?
+          Want to add breakfast for $
+          {settings?.breakfastPrice}?
         </Checkbox>
       </Box>
       <Box>

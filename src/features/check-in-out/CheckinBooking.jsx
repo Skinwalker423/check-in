@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import Checkbox from "../../ui/Checkbox";
 import useUpdateBooking from "../bookings/useUpdateBooking";
 import { useSettings } from "../settings/useSettings";
+import { formatCurrency } from "../../utils/helpers";
 
 const Box = styled.div`
   /* Box */
@@ -68,6 +69,13 @@ function CheckinBooking() {
     numNights
   );
 
+  const totalBreakfastPrice =
+    settings?.breakfastPrice * numNights * numGuests;
+
+  const totalAdjustedPrice = addBreakfast
+    ? totalPrice + totalBreakfastPrice
+    : totalPrice;
+
   function handleCheckin() {
     updateBooking(bookingId);
   }
@@ -94,8 +102,11 @@ function CheckinBooking() {
           }}
           disabled={booking?.hasBreakfast}
         >
-          Want to add breakfast for $
-          {settings?.breakfastPrice}?
+          Want to add breakfast for{" "}
+          {formatCurrency(totalBreakfastPrice)}?{" "}
+          {`(
+          ${formatCurrency(settings?.breakfastPrice)} per
+          person/per day)`}
         </Checkbox>
       </Box>
       <Box>
@@ -105,7 +116,12 @@ function CheckinBooking() {
           disabled={confirmPaid}
         >
           I confirm that {guests?.fullName} has paid the
-          full amount
+          full amount of{" "}
+          {formatCurrency(totalAdjustedPrice)}
+          {addBreakfast &&
+            `(${formatCurrency(
+              totalPrice
+            )} + ${formatCurrency(totalBreakfastPrice)})`}
         </Checkbox>
       </Box>
       <ButtonGroup>

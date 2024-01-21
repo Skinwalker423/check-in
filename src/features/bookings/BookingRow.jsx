@@ -9,7 +9,7 @@ import Menus from "../../ui/Menus";
 import { formatCurrency } from "../../utils/helpers";
 import { formatDistanceFromNow } from "../../utils/helpers";
 
-import { HiEye } from "react-icons/hi2";
+import { HiArrowUpOnSquare, HiEye } from "react-icons/hi2";
 import { HiArrowDownOnSquare } from "react-icons/hi2";
 
 const Cabin = styled.div`
@@ -107,6 +107,14 @@ function BookingRow({
                 }
               >
                 Check in
+              </Menus.Button>
+            )}
+            {status === "checked-in" && (
+              <Menus.Button
+                icon={<HiArrowUpOnSquare />}
+                onClick={() => {}}
+              >
+                Check Out
               </Menus.Button>
             )}
           </Menus.List>

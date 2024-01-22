@@ -123,7 +123,12 @@ function Toggle({ id }) {
     </StyledToggle>
   );
 }
-function Button({ children, icon, onClick }) {
+function Button({
+  children,
+  icon,
+  onClick,
+  disabled = false,
+}) {
   const { close } = useContext(MenusContext);
 
   const handleClick = () => {
@@ -133,7 +138,10 @@ function Button({ children, icon, onClick }) {
 
   return (
     <li>
-      <StyledButton onClick={handleClick}>
+      <StyledButton
+        disabled={disabled}
+        onClick={handleClick}
+      >
         {icon}
         <span>{children}</span>
       </StyledButton>

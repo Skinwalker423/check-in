@@ -13,9 +13,8 @@ const useCheckOut = () => {
 
   const { isLoading: isCheckingOut, mutate: checkout } =
     useMutation({
-      mutationFn: ({ bookingId, options = {} }) => {
+      mutationFn: (bookingId) => {
         return updateBookingApi(bookingId, {
-          ...options,
           status: "checked-out",
         });
       },

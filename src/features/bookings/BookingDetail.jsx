@@ -97,7 +97,11 @@ function BookingDetail() {
           </Modal.Open>
           <Modal.Content name={"delete"}>
             <ConfirmDelete
-              onConfirm={() => deleteBooking(booking.id)}
+              onConfirm={() => {
+                deleteBooking(booking.id, {
+                  onSettled: navigate(-1),
+                });
+              }}
               resourceName={`Booking #${booking.id}`}
               disabled={isDeleting}
             />

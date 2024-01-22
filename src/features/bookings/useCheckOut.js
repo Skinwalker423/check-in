@@ -5,11 +5,9 @@ import {
 import toast from "react-hot-toast";
 
 import { updateBooking as updateBookingApi } from "../../services/apiBookings";
-import { useNavigate } from "react-router-dom";
 
 const useCheckOut = () => {
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
 
   const { isLoading: isCheckingOut, mutate: checkout } =
     useMutation({
@@ -25,8 +23,6 @@ const useCheckOut = () => {
         queryClient.invalidateQueries({
           active: true,
         });
-
-        navigate("/");
       },
       onError: (err) => {
         toast.error(err.message, {

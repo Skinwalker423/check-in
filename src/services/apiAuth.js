@@ -13,3 +13,11 @@ export async function login({ email, password }) {
 
   return data;
 }
+
+export async function getUser() {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  return user;
+}

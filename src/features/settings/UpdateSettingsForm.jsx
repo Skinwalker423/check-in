@@ -46,9 +46,8 @@ function UpdateSettingsForm() {
 
     updateSetting({ [editedValue]: value });
   };
-  if (error) return <ErrorFallback>{error}</ErrorFallback>;
   if (isLoading) return <Spinner />;
-  console.log("errors", errorMsg);
+  if (error) return <ErrorFallback>{error}</ErrorFallback>;
 
   return (
     <Form>

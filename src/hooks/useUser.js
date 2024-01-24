@@ -4,14 +4,14 @@ import { getUser } from "../services/apiAuth";
 const useUser = () => {
   const {
     data: user,
-    isError,
+    error,
     isLoading,
   } = useQuery({
     queryFn: getUser,
     queryKey: ["user"],
   });
 
-  return { user, isError, isLoading };
+  return { user, error, isLoading };
 };
 
 export default useUser;

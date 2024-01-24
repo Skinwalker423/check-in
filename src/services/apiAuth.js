@@ -21,3 +21,11 @@ export async function getUser() {
 
   return user;
 }
+export async function getSession() {
+  const { data, error } = await supabase.auth.getSession();
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}

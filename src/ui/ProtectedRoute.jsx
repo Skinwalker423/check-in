@@ -1,16 +1,36 @@
 import { useNavigate } from "react-router-dom";
-import useUser from "../hooks/useUser";
+
 import Spinner from "./Spinner";
+import useUserSession from "../hooks/useUserSession";
+import styled from "styled-components";
+import { useEffect } from "react";
+
+const FullPage = styled.div`
+  height: 100vh;
+  background-color: var(--grey-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const ProtectedRoute = ({ children }) => {
-  const { isLoading, user } = useUser();
+  const { isLoading, isAuthenticated } = useUserSession();
   const navigate = useNavigate();
 
-  if (isLoading) return <Spinner />;
+  useEffect(() => {
+    if (!isAuthenticated && !isLoading) {
+      navigate("/login");
+    }
+  }, [isAuthenticated, isLoading, navigate]);
 
-  if (!user) {
-    navigate("/login");
-  }
+  if (isLoading)
+    return (
+      <FullPage>
+        <Spinner />
+      </FullPage>
+    );
+
+  if (!isAuthenticated) return null;
 
   return children;
 };

@@ -17,15 +17,25 @@ export async function login({ email, password }) {
 export async function getUser() {
   const {
     data: { user },
+    error,
   } = await supabase.auth.getUser();
+
+  if (error) {
+    throw new Error(error.message);
+  }
 
   return user;
 }
 export async function getSession() {
   const { data, error } = await supabase.auth.getSession();
+
+  if (!data?.session) return null;
+
   if (error) {
     throw new Error(error.message);
   }
 
-  return data;
+  const user = await getUser();
+
+  return user;
 }

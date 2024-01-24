@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import Spinner from "./Spinner";
-import useUserSession from "../hooks/useUserSession";
+import useUserSession from "../features/authentication/useUserSession";
 import styled from "styled-components";
 import { useEffect } from "react";
 

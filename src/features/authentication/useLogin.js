@@ -22,7 +22,9 @@ const useLogin = () => {
         ["user"],
         data?.session?.user
       );
-      navigate("/dashboard");
+      navigate("/dashboard", {
+        replace: true,
+      });
     },
     onError: (err) => {
       toast.error(err.message, {

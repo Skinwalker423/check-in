@@ -3,20 +3,37 @@ import Button from "../../ui/Button";
 import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
+import useSignup from "./useSignup";
 
 // Email regex: /\S+@\S+\.\S+/
 
 function SignupForm() {
+  const { signup, isLoading: isCreatingUser } = useSignup();
+
   const {
     formState: { errors, isLoading },
     handleSubmit,
     register,
+    reset,
   } = useForm();
 
   const onSubmit = (data) => {
     if (data.password !== data.passwordConfirm) {
-      console.log("not same passwords");
+      return;
     }
+
+    signup(
+      {
+        email: data.email,
+        password: data.password,
+        fullName: data.fullName,
+      },
+      {
+        onSettled: () => {
+          reset();
+        },
+      }
+    );
   };
 
   const onError = (err) => {
@@ -100,7 +117,7 @@ function SignupForm() {
       <FormRow>
         {/* type is an HTML attribute! */}
         <Button
-          disabled={isLoading}
+          disabled={isLoading || isCreatingUser}
           variation='secondary'
           type='reset'
         >

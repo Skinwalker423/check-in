@@ -47,10 +47,20 @@ export async function getSession() {
   return user;
 }
 
-export const signup = async ({ email, password }) => {
+export const signup = async ({
+  email,
+  password,
+  fullName,
+}) => {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
+    options: {
+      data: {
+        fullName,
+        avatar: "",
+      },
+    },
   });
 
   if (error) {

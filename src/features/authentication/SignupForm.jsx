@@ -14,7 +14,9 @@ function SignupForm() {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log("data", data);
+    if (data.password !== data.passwordConfirm) {
+      console.log("not same passwords");
+    }
   };
 
   const onError = (err) => {
@@ -43,7 +45,10 @@ function SignupForm() {
         <Input
           {...register("email", {
             required: "enter a email",
-            pattern: /\S+@\S+\.\S+/,
+            pattern: {
+              value: /\S+@\S+\.\S+/,
+              message: "Not a valid email",
+            },
           })}
           type='email'
           id='email'
@@ -57,6 +62,11 @@ function SignupForm() {
         <Input
           {...register("password", {
             required: "Password missing",
+            minLength: {
+              value: 8,
+              message:
+                "Password needs at least 8 characters",
+            },
           })}
           type='password'
           id='password'
@@ -70,6 +80,17 @@ function SignupForm() {
         <Input
           {...register("passwordConfirm", {
             required: "Please confirm your password",
+            minLength: {
+              value: 8,
+              message:
+                "Password needs at least 8 characters",
+            },
+            validate: (value, formValues) => {
+              return (
+                value === formValues?.password ||
+                "passwords do not match"
+              );
+            },
           })}
           type='password'
           id='passwordConfirm'

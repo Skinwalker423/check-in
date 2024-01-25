@@ -18,10 +18,7 @@ const useLogin = () => {
     mutationKey: ["login"],
     onSuccess: (data) => {
       toast.success("successfully logged in");
-      queryClient.setQueryData(
-        ["user"],
-        data?.session?.user
-      );
+      queryClient.setQueryData(["user"], data?.user);
       navigate("/dashboard", {
         replace: true,
       });

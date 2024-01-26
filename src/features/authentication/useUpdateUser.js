@@ -7,28 +7,21 @@ import toast from "react-hot-toast";
 
 const useUpdateUser = () => {
   const queryClient = useQueryClient();
-  const {
-    mutate: updateUser,
-    error,
-    isLoading,
-  } = useMutation({
-    mutationFn: ({
-      avatar,
-      fullName,
-      password,
-      currentAvatar,
-    }) => {
-      updateUserApi({
+  const { mutate: updateUser, isLoading } = useMutation({
+    mutationFn: ({ avatar, fullName, password }) => {
+      return updateUserApi({
         avatar,
         fullName,
         password,
-        currentAvatar,
       });
     },
-    mutationKey: ["user"],
     onSuccess: (data) => {
-      console.log("data", data);
       toast.success("successfully updated profile");
+      console.log("data", data);
+      queryClient.setQueryData(["user"], (oldData) => ({
+        ...oldData,
+        ...data,
+      }));
       queryClient.invalidateQueries({
         queryKey: ["user"],
       });
@@ -43,7 +36,7 @@ const useUpdateUser = () => {
       });
     },
   });
-  return { updateUser, isLoading, error };
+  return { updateUser, isLoading };
 };
 
 export default useUpdateUser;

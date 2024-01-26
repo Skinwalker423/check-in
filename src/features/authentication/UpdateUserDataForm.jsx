@@ -14,10 +14,7 @@ function UpdateUserDataForm() {
   const {
     user: {
       email,
-      user_metadata: {
-        fullName: currentFullName,
-        avatar: currentAvatar,
-      },
+      user_metadata: { fullName: currentFullName },
     },
   } = useUserSession();
   const { updateUser, isLoading } = useUpdateUser();
@@ -27,14 +24,24 @@ function UpdateUserDataForm() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(
-      "avatar",
-      avatar,
-      "current av",
-      currentAvatar
+    console.log("avatar", avatar);
+    if (!fullName) return;
+
+    updateUser(
+      { avatar, fullName },
+      {
+        onSuccess: () => {
+          setAvatar(null);
+          e.target.reset();
+        },
+      }
     );
-    updateUser({ avatar, fullName, currentAvatar });
   }
+
+  const handleCancel = () => {
+    setFullName(currentFullName);
+    setAvatar(null);
+  };
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -61,6 +68,7 @@ function UpdateUserDataForm() {
           disabled={isLoading}
           type='reset'
           variation='secondary'
+          onClick={handleCancel}
         >
           Cancel
         </Button>

@@ -7,6 +7,7 @@ import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 
 import useUserSession from "./useUserSession";
+import useUpdateUser from "./useUpdateUser";
 
 function UpdateUserDataForm() {
   // We don't need the loading state, and can immediately use the user data, because we know that it has already been loaded at this point
@@ -19,6 +20,7 @@ function UpdateUserDataForm() {
       },
     },
   } = useUserSession();
+  const { updateUser, isLoading } = useUpdateUser();
 
   const [fullName, setFullName] = useState(currentFullName);
   const [avatar, setAvatar] = useState(null);
@@ -31,6 +33,7 @@ function UpdateUserDataForm() {
       "current av",
       currentAvatar
     );
+    updateUser({ avatar, fullName, currentAvatar });
   }
 
   return (
@@ -54,7 +57,11 @@ function UpdateUserDataForm() {
         />
       </FormRow>
       <FormRow>
-        <Button type='reset' variation='secondary'>
+        <Button
+          disabled={isLoading}
+          type='reset'
+          variation='secondary'
+        >
           Cancel
         </Button>
         <Button>Update account</Button>

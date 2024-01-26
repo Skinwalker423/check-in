@@ -4,16 +4,21 @@ export async function updateUser({
   avatar,
   fullName,
   currentAvatar,
+  password,
 }) {
   const imageName = `${Math.random()}-${
     avatar.name
   }`.replace("/", "");
-  const imagePath = avatar.name
+  const imagePath = avatar
     ? `${supabaseUrl}/storage/v1/object/public/avatars/${imageName}`
-    : avatar;
+    : currentAvatar;
+
+  const dataProps = password
+    ? { password, avatar: imagePath, fullName }
+    : { avatar: imagePath, fullName };
 
   const { data, error } = await supabase.auth.updateUser({
-    data: { avatar: imagePath, fullName },
+    data: dataProps,
   });
 
   if (error) {
@@ -21,7 +26,7 @@ export async function updateUser({
     throw new Error("problem updating avatar");
   }
 
-  if (avatar.name) {
+  if (avatar) {
     const { error: uploadError } = await supabase.storage
       .from("avatars")
       .upload(imageName, avatar);

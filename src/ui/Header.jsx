@@ -7,8 +7,9 @@ const StyledHeader = styled.header`
   padding: 1.2rem 4.8rem;
   border-bottom: 1x solid var(--color-grey-100);
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
+  gap: 2.4rem;
 `;
 
 const Header = () => {

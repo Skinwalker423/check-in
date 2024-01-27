@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { StyleSheetManager } from "styled-components";
 import isPropValid from "@emotion/is-prop-valid";
 import App from "./App.jsx";
+import DarkModeProvider from "./context/DarkModeContext.jsx";
 
 function shouldForwardProp(propName, target) {
   if (typeof target === "string") {
@@ -18,7 +19,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <StyleSheetManager
       shouldForwardProp={shouldForwardProp}
     >
-      <App />
+      <DarkModeProvider>
+        <App />
+      </DarkModeProvider>
     </StyleSheetManager>
   </React.StrictMode>
 );

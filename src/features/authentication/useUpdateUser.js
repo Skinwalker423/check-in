@@ -15,16 +15,10 @@ const useUpdateUser = () => {
         password,
       });
     },
-    onSuccess: (data) => {
+    onSuccess: ({ user }) => {
       toast.success("successfully updated profile");
-      console.log("data", data);
-      queryClient.setQueryData(["user"], (oldData) => ({
-        ...oldData,
-        ...data,
-      }));
-      queryClient.invalidateQueries({
-        queryKey: ["user"],
-      });
+      console.log("data", user);
+      queryClient.setQueryData(["user"], user);
     },
     onError: (error) => {
       toast.error(error.message, {

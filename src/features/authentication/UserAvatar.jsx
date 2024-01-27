@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import useUserSession from "./useUserSession";
-import defaultUser from "../../../public/img/default-user.jpg";
 
 const StyledUserAvatar = styled.div`
   display: flex;
@@ -30,7 +29,7 @@ const UserAvatar = () => {
   return (
     <StyledUserAvatar>
       <Avatar
-        src={avatar || defaultUser}
+        src={avatar || "/img/default-user.jpg"}
         alt={`avatar of ${fullName}`}
       />
       {fullName}

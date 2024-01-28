@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import useRecentBookings from "./useRecentBookings";
+import Spinner from "../../ui/Spinner";
+import ErrorFallback from "../../ui/ErrorFallback";
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -8,8 +11,24 @@ const StyledDashboardLayout = styled.div`
 `;
 
 const DashboardLayout = () => {
+  const {
+    error,
+    isLoading,
+    recentBookings = {},
+  } = useRecentBookings();
+
+  if (isLoading) return <Spinner />;
+  if (error) return <ErrorFallback error={error.message} />;
+
+  console.log("recent bookings", recentBookings);
+
   return (
-    <StyledDashboardLayout>Dashboard</StyledDashboardLayout>
+    <StyledDashboardLayout>
+      <div>Stats</div>
+      <div>Chart</div>
+      <div>Something</div>
+      <div>Something else</div>
+    </StyledDashboardLayout>
   );
 };
 

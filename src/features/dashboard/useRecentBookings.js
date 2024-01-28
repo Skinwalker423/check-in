@@ -11,7 +11,10 @@ const useRecentBookings = () => {
     ? 7
     : parseInt(searchParams.get("last"));
 
-  const queryDate = subDays(getToday(), numDays);
+  const queryDate = subDays(
+    getToday(),
+    numDays
+  ).toISOString();
 
   const {
     data: recentBookings,

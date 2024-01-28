@@ -2,6 +2,9 @@ import styled from "styled-components";
 import useRecentBookings from "./useRecentBookings";
 import Spinner from "../../ui/Spinner";
 import ErrorFallback from "../../ui/ErrorFallback";
+import useRecentStays from "./useRecentStays";
+import Stats from "./Stats";
+import useCabins from "../cabins/useCabins";
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -11,20 +14,35 @@ const StyledDashboardLayout = styled.div`
 `;
 
 const DashboardLayout = () => {
+  const { error, isLoading, recentBookings, numNights } =
+    useRecentBookings();
+
   const {
-    error,
-    isLoading,
-    recentBookings = {},
-  } = useRecentBookings();
+    confirmedStays,
+    isLoadingRecentStays,
+    recentStaysError,
+  } = useRecentStays();
 
-  if (isLoading) return <Spinner />;
-  if (error) return <ErrorFallback error={error.message} />;
+  const { cabins, isLoading: isLoadingCabins } =
+    useCabins();
 
-  console.log("recent bookings", recentBookings);
+  if (isLoading || isLoadingRecentStays || isLoadingCabins)
+    return <Spinner />;
+  if (error || recentStaysError)
+    return (
+      <ErrorFallback
+        error={error.message || recentStaysError.message}
+      />
+    );
 
   return (
     <StyledDashboardLayout>
-      <div>Stats</div>
+      <Stats
+        bookings={recentBookings}
+        stays={confirmedStays}
+        numNights={numNights}
+        totalCabins={cabins.length}
+      />
       <div>Chart</div>
       <div>Something</div>
       <div>Something else</div>

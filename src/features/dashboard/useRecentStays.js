@@ -33,8 +33,10 @@ const useRecentStays = () => {
 
   return {
     confirmedStays,
+    recentStays,
     isLoadingRecentStays,
     recentStaysError,
+    numNights: numDays,
   };
 };
 

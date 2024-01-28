@@ -27,7 +27,12 @@ const useRecentBookings = () => {
     queryKey: ["recent-bookings", numDays],
   });
 
-  return { recentBookings, isLoading, error };
+  return {
+    recentBookings,
+    isLoading,
+    error,
+    numNights: numDays,
+  };
 };
 
 export default useRecentBookings;

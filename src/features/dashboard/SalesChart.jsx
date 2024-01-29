@@ -7,6 +7,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
+  ResponsiveContainer,
 } from "recharts";
 
 const StyledSalesChart = styled(DashboardBox)`
@@ -69,32 +70,34 @@ const colors = isDarkMode
 export default function SalesChart({ data = fakeData }) {
   return (
     <StyledSalesChart>
-      <AreaChart
-        width={1100}
-        height={300}
-        data={data}
-        margin={{
-          top: 10,
-          right: 30,
-          left: 0,
-          bottom: 0,
-        }}
-      >
-        <CartesianGrid strokeDasharray='3 3' />
-        <XAxis dataKey='label' />
-        <YAxis />
-        <Tooltip />
-        <Area
-          type='monotone'
-          dataKey='totalSales'
-          {...colors}
-        />
-        <Area
-          type='monotone'
-          dataKey='extrasSales'
-          {...colors}
-        />
-      </AreaChart>
+      <ResponsiveContainer width={"100%"} height={300}>
+        <AreaChart
+          data={data}
+          margin={{
+            top: 10,
+            right: 30,
+            left: 0,
+            bottom: 0,
+          }}
+        >
+          <CartesianGrid strokeDasharray='3 3' />
+          <XAxis dataKey='label' />
+          <YAxis />
+          <Tooltip />
+          <Area
+            type='monotone'
+            dataKey='totalSales'
+            {...colors}
+            {...colors.totalSales}
+          />
+          <Area
+            type='monotone'
+            dataKey='extrasSales'
+            {...colors}
+            {...colors.extrasSales}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
     </StyledSalesChart>
   );
 }

@@ -1,5 +1,13 @@
 import styled from "styled-components";
 import DashboardBox from "./DashboardBox";
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+} from "recharts";
 
 const StyledSalesChart = styled(DashboardBox)`
   grid-column: 1 / -1;
@@ -57,3 +65,36 @@ const colors = isDarkMode
       text: "#374151",
       background: "#fff",
     };
+
+export default function SalesChart({ data = fakeData }) {
+  return (
+    <StyledSalesChart>
+      <AreaChart
+        width={1100}
+        height={300}
+        data={data}
+        margin={{
+          top: 10,
+          right: 30,
+          left: 0,
+          bottom: 0,
+        }}
+      >
+        <CartesianGrid strokeDasharray='3 3' />
+        <XAxis dataKey='label' />
+        <YAxis />
+        <Tooltip />
+        <Area
+          type='monotone'
+          dataKey='totalSales'
+          {...colors}
+        />
+        <Area
+          type='monotone'
+          dataKey='extrasSales'
+          {...colors}
+        />
+      </AreaChart>
+    </StyledSalesChart>
+  );
+}

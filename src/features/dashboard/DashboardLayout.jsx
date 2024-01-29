@@ -5,6 +5,7 @@ import ErrorFallback from "../../ui/ErrorFallback";
 import useRecentStays from "./useRecentStays";
 import Stats from "./Stats";
 import useCabins from "../cabins/useCabins";
+import SalesChart from "./SalesChart";
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -43,7 +44,7 @@ const DashboardLayout = () => {
         numNights={numNights}
         totalCabins={cabins.length}
       />
-      <div>Chart</div>
+      <SalesChart />
       <div>Something</div>
       <div>Something else</div>
     </StyledDashboardLayout>

@@ -44,7 +44,10 @@ const DashboardLayout = () => {
         numNights={numNights}
         totalCabins={cabins.length}
       />
-      <SalesChart />
+      <SalesChart
+        data={recentBookings}
+        numNights={numNights}
+      />
       <div>Something</div>
       <div>Something else</div>
     </StyledDashboardLayout>

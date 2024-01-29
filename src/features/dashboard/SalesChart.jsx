@@ -10,6 +10,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+import { useDarkMode } from "../../hooks/useDarkMode";
+
 const StyledSalesChart = styled(DashboardBox)`
   grid-column: 1 / -1;
 
@@ -52,22 +54,22 @@ const fakeData = [
   { label: "Feb 06", totalSales: 1450, extrasSales: 400 },
 ];
 
-const isDarkMode = true;
-const colors = isDarkMode
-  ? {
-      totalSales: { stroke: "#4f46e5", fill: "#4f46e5" },
-      extrasSales: { stroke: "#22c55e", fill: "#22c55e" },
-      text: "#e5e7eb",
-      background: "#18212f",
-    }
-  : {
-      totalSales: { stroke: "#4f46e5", fill: "#c7d2fe" },
-      extrasSales: { stroke: "#16a34a", fill: "#dcfce7" },
-      text: "#374151",
-      background: "#fff",
-    };
-
 export default function SalesChart({ data = fakeData }) {
+  const { darkModeActive } = useDarkMode();
+
+  const colors = darkModeActive
+    ? {
+        totalSales: { stroke: "#4f46e5", fill: "#4f46e5" },
+        extrasSales: { stroke: "#22c55e", fill: "#22c55e" },
+        text: "#e5e7eb",
+        background: "#18212f",
+      }
+    : {
+        totalSales: { stroke: "#4f46e5", fill: "#c7d2fe" },
+        extrasSales: { stroke: "#16a34a", fill: "#dcfce7" },
+        text: "#374151",
+        background: "#fff",
+      };
   return (
     <StyledSalesChart>
       <ResponsiveContainer width={"100%"} height={300}>
@@ -81,19 +83,36 @@ export default function SalesChart({ data = fakeData }) {
           }}
         >
           <CartesianGrid strokeDasharray='3 3' />
-          <XAxis dataKey='label' />
-          <YAxis />
-          <Tooltip />
+          <XAxis
+            tick={{
+              fill: colors.text,
+            }}
+            tickLine={{
+              stroke: colors.text,
+            }}
+            dataKey='label'
+          />
+          <YAxis
+            tick={{
+              fill: colors.text,
+            }}
+            tickLine={{
+              stroke: colors.text,
+            }}
+          />
+          <Tooltip
+            contentStyle={{
+              background: colors.background,
+            }}
+          />
           <Area
             type='monotone'
             dataKey='totalSales'
-            {...colors}
             {...colors.totalSales}
           />
           <Area
             type='monotone'
             dataKey='extrasSales'
-            {...colors}
             {...colors.extrasSales}
           />
         </AreaChart>

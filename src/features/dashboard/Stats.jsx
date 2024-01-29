@@ -31,7 +31,7 @@ const Stats = ({
   const occupancyRate =
     parseFloat(
       occupancyNights / totalAvailableNights
-    ).toFixed(3) * 100;
+    ).toFixed(2) * 100;
 
   return (
     <>

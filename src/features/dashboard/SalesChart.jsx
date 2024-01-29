@@ -66,21 +66,26 @@ export default function SalesChart({
 }) {
   const { darkModeActive } = useDarkMode();
 
-  console.log("num Nights", numNights, data);
-
   const allDates = eachDayOfInterval({
     start: subDays(new Date(), numNights - 1),
     end: new Date(),
   });
 
   const formattedData = allDates.map((date) => {
+    const filteredBookings = data.filter((booking) =>
+      isSameDay(new Date(booking?.created_at), date)
+    );
+
     return {
       label: format(date, "MMM dd"),
-      totalSales: data
-        .filter((booking) =>
-          isSameDay(new Date(booking?.created_at), date)
-        )
-        ?.reduce((acc, curr) => acc + curr.totalPrice, 0),
+      totalSales: filteredBookings.reduce(
+        (acc, curr) => acc + curr?.totalPrice,
+        0
+      ),
+      extraSales: filteredBookings.reduce(
+        (acc, curr) => acc + curr?.extraPrice,
+        0
+      ),
     };
   });
 
@@ -140,7 +145,7 @@ export default function SalesChart({
           />
           <Area
             type='monotone'
-            dataKey='extraPrice'
+            dataKey='extraSales'
             {...colors.extraSales}
             name='Extra Sales'
           />

@@ -17,6 +17,7 @@ import {
   isSameDay,
   subDays,
 } from "date-fns";
+import Heading from "../../ui/Heading";
 
 const StyledSalesChart = styled(DashboardBox)`
   grid-column: 1 / -1;
@@ -104,6 +105,10 @@ export default function SalesChart({
       };
   return (
     <StyledSalesChart>
+      <Heading as={"h2"}>
+        Sales from {format(allDates[0], "MMM dd yyyy")} to{" "}
+        {format(new Date(), "MMM dd yyyy")}
+      </Heading>
       <ResponsiveContainer width={"100%"} height={300}>
         <AreaChart
           data={formattedData}

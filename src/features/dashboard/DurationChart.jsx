@@ -4,8 +4,10 @@ import {
   Pie,
   Cell,
   ResponsiveContainer,
+  Legend,
 } from "recharts";
 import Heading from "../../ui/Heading";
+import { useDarkMode } from "../../hooks/useDarkMode";
 
 const ChartBox = styled.div`
   /* Box */
@@ -153,9 +155,7 @@ const renderCustomizedLabel = ({
   innerRadius,
   outerRadius,
   percent,
-  index,
 }) => {
-  console.log("index", index);
   const radius =
     innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -166,7 +166,7 @@ const renderCustomizedLabel = ({
       x={x}
       y={y}
       fill='white'
-      textAnchor={x > cx ? "start" : "end"}
+      textAnchor={"middle"}
       dominantBaseline='central'
     >
       {`${(percent * 100).toFixed(0)}%`}
@@ -174,13 +174,13 @@ const renderCustomizedLabel = ({
   );
 };
 export default function DurationChart({ confirmedStays }) {
-  console.log(
-    "data",
-    prepareData,
-    startDataDark,
-    startDataLight,
-    confirmedStays
-  );
+  const { darkModeActive } = useDarkMode();
+
+  const startingData = darkModeActive
+    ? startDataDark
+    : startDataLight;
+
+  const data = prepareData(startingData, confirmedStays);
 
   return (
     <ChartBox>
@@ -188,25 +188,33 @@ export default function DurationChart({ confirmedStays }) {
       <ResponsiveContainer width={"100%"} height={400}>
         <PieChart>
           <Pie
-            data={startDataLight}
+            data={data}
             cx={"40%"}
-            cy={"30%"}
+            cy={"31%"}
             labelLine={false}
             label={renderCustomizedLabel}
-            innerRadius={85}
-            outerRadius={110}
+            innerRadius={75}
+            outerRadius={125}
             paddingAngle={3}
             fill='#8884d8'
             dataKey='value'
             nameKey={"duration"}
           >
-            {startDataLight.map((entry, index) => (
+            {data.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
                 fill={entry.color}
               />
             ))}
           </Pie>
+          <Legend
+            verticalAlign='top'
+            align='right'
+            width={"30%"}
+            layout='vertical'
+            iconSize={15}
+            iconType='diamond'
+          />
         </PieChart>
       </ResponsiveContainer>
     </ChartBox>

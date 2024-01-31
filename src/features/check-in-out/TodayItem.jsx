@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Tag from "../../ui/Tag";
+import { Flag } from "../../ui/Flag";
 
 const StyledTodayItem = styled.li`
   display: grid;

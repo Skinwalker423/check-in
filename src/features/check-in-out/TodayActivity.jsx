@@ -5,6 +5,7 @@ import Row from "../../ui/Row";
 import useTodayActivity from "./useTodayActivity";
 import Spinner from "../../ui/Spinner";
 import TodayItem from "./TodayItem";
+import { isSameDay } from "date-fns";
 
 const StyledToday = styled.div`
   /* Box */
@@ -43,12 +44,16 @@ function TodayActivity() {
   const { error, isLoading, todayActivity } =
     useTodayActivity();
 
-  console.log(todayActivity);
+  const filteredList = todayActivity.filter(
+    (booking) =>
+      isSameDay(booking.startDate, new Date()) ||
+      isSameDay(booking.endDate, new Date())
+  );
 
   const activity =
-    todayActivity?.length > 0 ? (
+    filteredList?.length > 0 ? (
       <TodayList>
-        {todayActivity.map((booking) => {
+        {filteredList.map((booking) => {
           return (
             <TodayItem key={booking.id} booking={booking} />
           );

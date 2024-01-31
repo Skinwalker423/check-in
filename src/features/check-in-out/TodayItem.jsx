@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Tag from "../../ui/Tag";
 
 const StyledTodayItem = styled.li`
   display: grid;
@@ -20,9 +21,22 @@ const Guest = styled.div`
 `;
 
 const TodayItem = ({ booking }) => {
+  const { status, guests, numNights } = booking;
+
   return (
     <StyledTodayItem>
-      <Guest>{booking.fullName}</Guest>
+      {status === "unconfirmed" && (
+        <Tag type='green'>Arriving</Tag>
+      )}
+      {status === "checked-in" && (
+        <Tag type='blue'>Departing</Tag>
+      )}
+      <Flag
+        src={guests?.countryFlag || "/img/default-user.jpg"}
+        alt={"country flag"}
+      />
+      <Guest>{booking?.guests?.fullName}</Guest>
+      <div>{numNights} nights</div>
     </StyledTodayItem>
   );
 };

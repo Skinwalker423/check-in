@@ -10,7 +10,9 @@ const Tag = styled.span`
 
   /* Make these dynamic, based on the received prop */
   color: var(--color-${(props) => props.type}-700);
-  background-color: var(--color-${(props) => props.type}-100);
+  background-color: var(
+    --color-${(props) => props.type}-100
+  );
 `;
 
 export default Tag;

@@ -43,8 +43,10 @@ function TodayActivity() {
   const { error, isLoading, todayActivity } =
     useTodayActivity();
 
+  console.log(todayActivity);
+
   const activity =
-    todayActivity.length > 0 ? (
+    todayActivity?.length > 0 ? (
       <TodayList>
         {todayActivity.map((booking) => {
           return (

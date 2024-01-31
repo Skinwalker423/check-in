@@ -7,7 +7,7 @@ function CheckoutButton({ bookingId }) {
 
   return (
     <Button
-      variation='secondary'
+      variation='danger'
       size='small'
       disabled={isCheckingOut}
       icon={<HiArrowUpOnSquare />}

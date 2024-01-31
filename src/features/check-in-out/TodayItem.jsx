@@ -3,6 +3,7 @@ import Tag from "../../ui/Tag";
 import { Flag } from "../../ui/Flag";
 import Button from "../../ui/Button";
 import { Link } from "react-router-dom";
+import CheckoutButton from "./CheckoutButton";
 
 const StyledTodayItem = styled.li`
   display: grid;
@@ -49,6 +50,9 @@ const TodayItem = ({ booking }) => {
         >
           Check-In
         </Button>
+      )}
+      {status === "checked-in" && (
+        <CheckoutButton bookingId={id} />
       )}
     </StyledTodayItem>
   );

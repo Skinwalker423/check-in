@@ -44,16 +44,19 @@ function TodayActivity() {
   const { error, isLoading, todayActivity } =
     useTodayActivity();
 
-  const filteredList = todayActivity.filter(
+  const filteredList = todayActivity?.filter(
     (booking) =>
       isSameDay(booking.startDate, new Date()) ||
       isSameDay(booking.endDate, new Date())
   );
 
+  const data =
+    filteredList?.length < 2 ? todayActivity : filteredList;
+
   const activity =
-    filteredList?.length > 0 ? (
+    data?.length > 0 ? (
       <TodayList>
-        {filteredList.map((booking) => {
+        {data.map((booking) => {
           return (
             <TodayItem key={booking.id} booking={booking} />
           );

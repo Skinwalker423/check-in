@@ -9,6 +9,7 @@ const useOutsideElementClick = ({
   useEffect(() => {
     const handleClick = (e) => {
       if (ref.current && !ref.current.contains(e?.target)) {
+        e.stopPropagation();
         onClose();
       }
     };

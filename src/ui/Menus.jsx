@@ -111,15 +111,15 @@ function List({ children, id }) {
   );
 }
 function Toggle({ id }) {
-  const { open, close, openId } = useContext(MenusContext);
+  const { open, openId } = useContext(MenusContext);
 
   function handleClick() {
-    openId === "" || openId !== id ? open(id) : close();
+    openId === "" && openId !== id ? open(id) : close();
   }
 
   return (
     <StyledToggle onClick={handleClick}>
-      <HiEllipsisVertical />
+      <HiEllipsisVertical id={id} />
     </StyledToggle>
   );
 }

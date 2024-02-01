@@ -36,12 +36,8 @@ function SignupForm() {
     );
   };
 
-  const onError = (err) => {
-    console.log("error", err);
-  };
-
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow
         label='Full name'
         error={errors?.fullName?.message}

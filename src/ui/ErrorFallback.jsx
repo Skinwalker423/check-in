@@ -37,7 +37,6 @@ export default function ErrorFallback({
   error,
   resetErrorBoundary,
 }) {
-  console.log("error inside fallback", resetErrorBoundary);
   return (
     <>
       <GlobalStyles />

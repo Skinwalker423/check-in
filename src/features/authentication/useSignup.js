@@ -11,7 +11,6 @@ const useSignup = () => {
       toast.success(
         "successfully created new user. Please verify user's email address"
       );
-      console.log("data", data);
     },
     onError: (error) => {
       toast.error(error.message, {

@@ -17,7 +17,7 @@ const useUpdateUser = () => {
     },
     onSuccess: ({ user }) => {
       toast.success("successfully updated profile");
-      console.log("data", user);
+
       queryClient.setQueryData(["user"], user);
     },
     onError: (error) => {

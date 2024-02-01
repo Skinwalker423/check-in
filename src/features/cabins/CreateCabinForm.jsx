@@ -36,14 +36,10 @@ function CreateCabinForm({ onClose }) {
     );
   };
 
-  const onError = (errors) => {
-    console.log("errors", errors);
-  };
-
   return (
     <Form
       type={onClose ? "modal" : "regular"}
-      onSubmit={handleSubmit(onSubmit, onError)}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <FormRow
         label={"Cabin Name"}

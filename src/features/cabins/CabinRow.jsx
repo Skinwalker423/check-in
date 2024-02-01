@@ -60,7 +60,6 @@ const CabinRow = ({ cabin }) => {
   const { createCabin, isCreating } = useCreateCabin();
 
   const handleCopyCabin = () => {
-    console.log("copying");
     createCabin({
       name: `${name}-copy`,
       image,

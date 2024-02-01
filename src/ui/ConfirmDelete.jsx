@@ -26,7 +26,6 @@ function ConfirmDelete({
   disabled,
   onClose,
 }) {
-  console.log("onConfirm", onConfirm);
   return (
     <StyledConfirmDelete>
       <Heading as='h3'>Delete {resourceName}</Heading>

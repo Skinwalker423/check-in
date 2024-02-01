@@ -35,7 +35,6 @@ function EditCabinForm({ cabinToEdit, onClose }) {
       },
       {
         onSuccess: (data) => {
-          console.log("edited data", data);
           reset();
           onClose();
         },
@@ -43,12 +42,8 @@ function EditCabinForm({ cabinToEdit, onClose }) {
     );
   };
 
-  const onError = (errors) => {
-    console.log("errors", errors);
-  };
-
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow
         label={"Cabin Name"}
         error={errors?.name?.message}

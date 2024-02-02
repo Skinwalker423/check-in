@@ -36,7 +36,11 @@ const FilterButton = styled.button`
   }
 `;
 
-const Filter = ({ filterField, options }) => {
+const Filter = ({
+  filterField,
+  options,
+  defaultOptionIndex = 0,
+}) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const handleClick = (value) => {
     searchParams.set(filterField, value);
@@ -47,7 +51,8 @@ const Filter = ({ filterField, options }) => {
   };
 
   const activeValue =
-    searchParams.get(filterField) || options[1].value;
+    searchParams.get(filterField) ||
+    options[defaultOptionIndex].value;
 
   return (
     <StyledFilter>

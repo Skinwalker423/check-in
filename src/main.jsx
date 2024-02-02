@@ -20,9 +20,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ErrorBoundary
       FallbackComponent={ErrorFallback}
-      onReset={() =>
-        window.location.replace("http://localhost:5173")
-      }
+      onReset={() => window.location.replace("/")}
     >
       <StyleSheetManager
         shouldForwardProp={shouldForwardProp}

@@ -6,8 +6,9 @@ const StyledLogo = styled.div`
 `;
 
 const Img = styled.img`
-  height: 9.6rem;
+  height: 15rem;
   width: auto;
+  border-radius: 9999px;
 `;
 
 function Logo() {
@@ -16,9 +17,11 @@ function Logo() {
   return (
     <StyledLogo>
       <Img
-        src={`/img/logo-${
-          darkModeActive ? "dark" : "light"
-        }.png`}
+        src={
+          darkModeActive
+            ? "/img/checkinLogo.png"
+            : "/img/checkinLogo-black.png"
+        }
         alt='Logo'
       />
     </StyledLogo>

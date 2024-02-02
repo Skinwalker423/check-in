@@ -8,7 +8,7 @@ const useRecentStays = () => {
   const [searchParams] = useSearchParams();
 
   const numDays = !searchParams.get("last")
-    ? 7
+    ? 30
     : parseInt(searchParams.get("last"));
 
   const queryDate = subDays(

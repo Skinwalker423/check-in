@@ -181,7 +181,6 @@ export default function DurationChart({ confirmedStays }) {
     : startDataLight;
 
   const data = prepareData(startingData, confirmedStays);
-  console.log("data", data);
 
   return (
     <ChartBox>

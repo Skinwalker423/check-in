@@ -47,7 +47,7 @@ const Filter = ({ filterField, options }) => {
   };
 
   const activeValue =
-    searchParams.get(filterField) || options[0].value;
+    searchParams.get(filterField) || options[1].value;
 
   return (
     <StyledFilter>

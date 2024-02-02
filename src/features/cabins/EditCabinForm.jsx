@@ -34,7 +34,7 @@ function EditCabinForm({ cabinToEdit, onClose }) {
             : data.image,
       },
       {
-        onSuccess: (data) => {
+        onSuccess: () => {
           reset();
           onClose();
         },

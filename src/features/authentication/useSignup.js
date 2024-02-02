@@ -7,7 +7,7 @@ const useSignup = () => {
     mutationFn: ({ email, password, fullName }) =>
       signupApi({ email, password, fullName }),
     mutationKey: ["signup"],
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.success(
         "successfully created new user. Please verify user's email address"
       );
